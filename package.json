@@ -1,0 +1,29 @@
+{
+  "name": "graphql-vue",
+  "version": "1.0.0",
+  "description": "A maintenance tracker application built with graphql and Vue js",
+  "main": "apps/server/index.js",
+  "scripts": {
+    "test": "lerna run test --stream"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Veraclins/graphql-vue.git"
+  },
+  "keywords": [
+    "graphql",
+    "vue",
+    "apollo",
+    "prisma"
+  ],
+  "author": "Agada Clinton Innocent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Veraclins/graphql-vue/issues"
+  },
+  "homepage": "https://github.com/Veraclins/graphql-vue#readme",
+  "devDependencies": {
+    "hygen": "2.1.x",
+    "lerna": "^3.10.7"
+  }
+}
