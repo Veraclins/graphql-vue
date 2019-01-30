@@ -1,17 +1,35 @@
-type Post {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  published: Boolean! @default(value: "false")
-  title: String!
-  content: String!
-  author: User!
+type User {
+	id: ID! @unique
+	createdAt: DateTime!
+	updatedAt: DateTime!
+	firstName: String
+	lastName: String
+	email: String! @unique
+	username: String! @unique
+	password: String!
+	role: ROLE! @default(value: "USER")
+	requests: [Request!]!
 }
 
-type User {
-  id: ID! @unique
-  email: String! @unique
-  password: String!
-  name: String!
-  posts: [Post!]!
+type Request {
+	id: ID! @unique
+	createdAt: DateTime!
+	updatedAt: DateTime!
+	title: String!
+	device: String!
+	description: String!
+	status: STATUS! @default(value: "PENDING")
+	owner: User!
+}
+
+enum ROLE {
+	USER
+	ADMIN
+}
+
+enum STATUS {
+	PENDING
+	APPROVED
+	DISAPPROVED
+	RESOLVED
 }

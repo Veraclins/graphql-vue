@@ -1,0 +1,21 @@
+// CONTENT
+$color-body-bg: #f9f7f5;
+$color-text: #444;
+$color-heading-text: #35495e;
+$color-login-form-title: #909090;
+$color-login-form-container: #f9f6f4;
+$color-success-container: #44e276;
+$color-error-container: #f84b4b;
+$color-error-text: white;
+
+// LINKS
+$color-link-text: #39a275;
+$color-link-text-active: $color-text;
+
+// INPUTS
+$color-input-border: lighten($color-heading-text, 50%);
+
+// BUTTONS
+$color-button-bg: $color-link-text;
+$color-button-disabled-bg: darken(desaturate($color-button-bg, 20%), 10%);
+$color-button-text: white;

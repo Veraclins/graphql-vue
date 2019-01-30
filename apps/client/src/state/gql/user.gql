@@ -1,0 +1,99 @@
+### Queries
+
+query GetSelf {
+  self {
+    ...UserMainFields
+  }
+}
+
+query GetUser($id: ID!) {
+  user(id: $id) {
+    ...UserMainFields
+  }
+}
+
+query GetUserContent($id: ID!) {
+  userContent(id: $id) {
+    ...PostFields
+    isPublished
+  }
+}
+
+query GetRecentPosts {
+  feed {
+    ...PostFields
+  }
+}
+
+query LocalGetSelf {
+  user @client {
+    ...UserMainFields
+  }
+}
+
+### Mutations
+
+mutation Authenticate($idToken: String!) {
+  authenticate(idToken: $idToken) {
+    ...UserMainFields
+  }
+}
+
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    user {
+      ...UserMainFields
+    }
+    token
+  }
+}
+
+mutation Signup($email: String!, $password: String!, $name: String!) {
+  signup(email: $email, password: $password, name: $name) {
+    user {
+      ...UserMainFields
+    }
+    token
+  }
+}
+
+mutation CreateDraft($title: String!, $text: String!) {
+  createDraft(title: $title, text: $text) {
+    ...PostFields
+    isPublished
+  }
+}
+
+mutation PublishPost($id: ID!) {
+  publishPost(id: $id) {
+    ...PostFields
+    isPublished
+  }
+}
+
+mutation UpdatePost($input: PostUpdatedInput!) {
+  updatePost(input: $input) {
+    ...PostFields
+  }
+}
+
+mutation LocalSetSelf($user: User!) {
+  setSelf(user: $user) @client
+}
+
+### Fragments
+
+fragment PostFields on Post {
+  id
+  title
+  published
+  author {
+    id
+    name
+  }
+}
+
+fragment UserMainFields on User {
+  id
+  email
+}

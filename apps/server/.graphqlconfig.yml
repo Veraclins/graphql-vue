@@ -1,0 +1,20 @@
+projects:
+  app:
+    schemaPath: 'src/schema/index.graphql'
+    extensions:
+      endpoints:
+        default: 'http://localhost:${env:PORT}'
+  prisma:
+    schemaPath: 'src/generated/prisma.graphql'
+    includes: [
+      "prisma.graphql",
+      "seed.graphql",
+      "datamodel.graphql",
+    ]
+    extensions:
+      prisma: prisma/prisma.yml
+      codegen:
+      - generator: prisma-binding
+        language: typescript
+        output:
+          binding: src/generated/prisma.ts

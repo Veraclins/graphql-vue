@@ -1,0 +1,53 @@
+# import * from "../generated/prisma.graphql"
+
+type Query {
+	getAllRequests: [Request]
+	getRequestById(id: ID!): Request
+	getUserRequests: [Request]
+}
+
+type Mutation {
+	# Authentication
+	login(username: String!, password: String!): AuthPayload!
+	signup(email: String!, password: String!, username: String!): AuthPayload!
+	# Profile
+	updateProfile(id: ID!, firstName: String!, lastName: String!): User!
+	# Requests
+	createRequest(title: String!, device: String!, description: String!): Request!
+	updateRequest(
+	id: ID!
+	title: String
+	device: String
+	description: String
+	): Request!
+
+	approveRequest(id: ID!): Request!
+	disapproveRequest(id: ID!): Request!
+	resolveRequest(id: ID!): Request!
+}
+
+type AuthPayload {
+	token: String!
+	user: User!
+}
+
+type User {
+	id: ID!
+	email: String!
+	username: String!
+	firstName: String
+	lastName: String
+	createdAt: DateTime!
+	requests: [Request]
+}
+
+type Request {
+	id: ID!
+	title: String!
+	device: String!
+	description: String!
+	status: STATUS
+	createdAt: DateTime!
+	updatedAt: DateTime!
+	owner: User
+}
