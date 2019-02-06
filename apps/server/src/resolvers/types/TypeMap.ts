@@ -1,12 +1,12 @@
-import { ITypeMap } from '../../generated/resolvers';
+import { ITypeMap } from '@generated/resolvers';
 
-import { QueryParent } from '../Query';
-import { MutationParent } from '../Mutation';
-import { AuthPayloadParent } from '../AuthPayload';
-import { UserParent } from '../User';
-import { RequestParent } from '../Request';
+import { AuthPayloadParent } from '@resolvers/AuthPayload';
+import { MutationParent } from '@resolvers/Mutation';
+import { QueryParent } from '@resolvers/Query';
+import { RequestParent } from '@resolvers/Request';
+import { UserParent } from '@resolvers/User';
 
-import { Context } from './Context';
+import { Context } from '@resolvers/types/Context';
 
 export interface TypeMap extends ITypeMap {
   Context: Context;

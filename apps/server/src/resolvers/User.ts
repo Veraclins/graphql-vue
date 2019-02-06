@@ -7,6 +7,7 @@ export interface UserParent {
   email: string;
   username: string;
   firstName?: string;
+  role: string;
   lastName?: string;
   createdAt: string;
   requests?: RequestParent[];
@@ -18,6 +19,7 @@ export const User: UserResolvers.Type<TypeMap> = {
   username: parent => parent.username,
   firstName: parent => parent.firstName,
   lastName: parent => parent.lastName,
+  role: parent => parent.role,
   createdAt: parent => parent.createdAt,
   requests: (parent, args, context) =>
     context.prisma.user({ id: parent.id }).requests(),

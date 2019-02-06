@@ -38,4 +38,9 @@ module.exports = {
     // Enable CSS source maps.
     sourceMap: true,
   },
+  devServer: {
+    watchOptions: {
+      poll: true,
+    },
+  },
 };

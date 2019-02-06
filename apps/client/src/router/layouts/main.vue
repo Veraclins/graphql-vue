@@ -1,25 +1,27 @@
 <script>
 import NavBar from '@components/nav-bar';
+import Modals from '@layouts/modals';
 
 export default {
-  components: { NavBar },
+  components: { NavBar, Modals },
 };
 </script>
 
 <template>
-  <div :class="$style.container">
+  <div>
     <NavBar />
-    <slot />
+    <div class="container" :class="$style.content">
+      <slot />
+    </div>
+    <Modals />
   </div>
 </template>
 
 <style lang="scss" module>
 @import '@design';
-
-.container {
-  min-width: $size-content-width-min;
-  max-width: $size-content-width-max;
-  margin: 10px auto;
-  text-align: center;
+.content {
+  font-size: 22px;
+  line-height: 35px;
+  text-align: justify;
 }
 </style>

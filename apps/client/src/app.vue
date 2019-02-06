@@ -44,7 +44,8 @@ export default {
 }
 
 body {
-  background: $color-body-bg;
+  margin-top: 80px;
+  background: $color-main;
 }
 
 #app {
@@ -54,9 +55,15 @@ body {
 // ===
 // Base element styles
 // ===
-
-a,
-a:visited {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+a {
   color: $color-link-text;
 }
 
@@ -80,7 +87,10 @@ h5,
 h6 {
   @extend %typography-small;
 }
-
+.container {
+  padding: 8px 8%;
+  margin: 0 auto;
+}
 // ===
 // Vendor
 // ===

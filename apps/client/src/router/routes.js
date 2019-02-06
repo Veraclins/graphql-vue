@@ -1,4 +1,3 @@
-import { logout } from '@services/auth';
 import { isValidSession } from '@services/auth/session';
 
 export default [
@@ -24,17 +23,22 @@ export default [
     },
   },
   {
-    path: '/profile/:id',
-    name: 'user-profile',
+    path: '/dashboard/',
+    name: 'dashboard',
+    component: () => lazyLoadView(import('@views/404')),
+    props: true,
+  },
+  {
+    path: '/requests',
+    name: 'requests',
     component: () => lazyLoadView(import('@views/profile')),
     props: true,
   },
   {
-    path: '/logout',
-    name: 'logout',
-    beforeEnter(routeTo, routeFrom, next) {
-      logout();
-    },
+    path: '/admin',
+    name: 'admin',
+    component: () => lazyLoadView(import('@views/loading')),
+    props: true,
   },
   {
     path: '/loading',

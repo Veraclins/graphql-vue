@@ -1,9 +1,10 @@
 import { AuthenticationError, NotFoundError } from '@errors';
 import { MutationResolvers } from '@generated/resolvers';
 import { TypeMap } from '@resolvers/types/TypeMap';
-import { getAuthPayload } from '@utils';
+import { getAuthPayload, setRequestStatus } from '@utils';
 import { compare, hash } from '@utils/bcrypt';
 
+// tslint:disable-next-line: no-empty-interface
 export interface MutationParent {}
 
 export const Mutation: MutationResolvers.Type<TypeMap> = {
@@ -70,54 +71,24 @@ export const Mutation: MutationResolvers.Type<TypeMap> = {
     });
   },
 
-  approveRequest: async (parent, args, context) => {
-    const { id } = args;
-    const requestExists = await context.prisma.$exists.request({
-      id,
-      status_in: ['DISAPPROVED', 'PENDING'],
-    });
-    if (!requestExists)
-      throw new NotFoundError(
-        'The request does not exist or it has already been approved/resolved'
-      );
-
-    return context.prisma.updateRequest({
-      where: { id },
-      data: { status: 'APPROVED' },
-    });
-  },
-
-  disapproveRequest: async (parent, args, context) => {
-    const { id } = args;
-    const requestExists = await context.prisma.$exists.request({
-      id,
-      status_in: ['APPROVED', 'PENDING'],
-    });
-    if (!requestExists)
-      throw new NotFoundError(
-        'The request does not exist or has already been disapproved/resolved'
-      );
-
-    return context.prisma.updateRequest({
-      where: { id },
-      data: { status: 'DISAPPROVED' },
-    });
-  },
-
-  resolveRequest: async (parent, args, context) => {
-    const { id } = args;
-    const requestExists = await context.prisma.$exists.request({
-      id,
+  approveRequest: async (parent, args, context) =>
+    setRequestStatus(context, {
+      id: args.id,
       status: 'APPROVED',
-    });
-    if (!requestExists)
-      throw new NotFoundError(
-        'The request does not exist or it has not been approved yet'
-      );
+      conditions: ['PENDING', 'DISAPPROVED'],
+    }),
 
-    return context.prisma.updateRequest({
-      where: { id },
-      data: { status: 'RESOLVED' },
-    });
-  },
+  disapproveRequest: async (parent, args, context) =>
+    setRequestStatus(context, {
+      id: args.id,
+      status: 'DISAPPROVED',
+      conditions: ['PENDING', 'APPROVED'],
+    }),
+
+  resolveRequest: async (parent, args, context) =>
+    setRequestStatus(context, {
+      id: args.id,
+      status: 'RESOLVED',
+      conditions: ['APPROVED'],
+    }),
 };

@@ -13,12 +13,11 @@ export const isValidSession = () =>
 /**
  * @description Save authentication data in localStorage
  */
-export const setSession = ({ exp, iat, userId, token }) => {
-  localStorage.setItem(USER_ID, userId);
+export const setSession = ({ exp, id, token }) => {
+  localStorage.setItem(USER_ID, id);
   localStorage.setItem(ACCESS_TOKEN, token);
   // Set the time that the access token will expire at
   localStorage.setItem(EXPIRES_AT, JSON.stringify(exp * 1000));
-  console.log(new Date(JSON.parse(localStorage.getItem(EXPIRES_AT))));
 };
 
 /**

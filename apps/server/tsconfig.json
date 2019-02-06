@@ -45,5 +45,6 @@
      },
      "types": ["node", "jest"]
    },
-   "include": ["src/**/*", "node_modules/@types"]
+   "include": ["src/**/*", "node_modules/@types"],
+   "exclude": ["src/generated/*"]
  }

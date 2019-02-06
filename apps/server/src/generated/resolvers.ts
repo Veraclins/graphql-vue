@@ -3,6 +3,7 @@ import { GraphQLResolveInfo } from 'graphql';
 
 export interface ITypeMap {
   Context: any;
+  ROLE: any;
   STATUS: any;
 
   QueryParent: any;
@@ -278,6 +279,13 @@ export namespace UserResolvers {
     info: GraphQLResolveInfo
   ) => string | null | Promise<string | null>;
 
+  export type RoleResolver<T extends ITypeMap> = (
+    parent: T['UserParent'],
+    args: {},
+    ctx: T['Context'],
+    info: GraphQLResolveInfo
+  ) => T['ROLE'] | Promise<T['ROLE']>;
+
   export type CreatedAtResolver<T extends ITypeMap> = (
     parent: T['UserParent'],
     args: {},
@@ -323,6 +331,12 @@ export namespace UserResolvers {
       ctx: T['Context'],
       info: GraphQLResolveInfo
     ) => string | null | Promise<string | null>;
+    role: (
+      parent: T['UserParent'],
+      args: {},
+      ctx: T['Context'],
+      info: GraphQLResolveInfo
+    ) => T['ROLE'] | Promise<T['ROLE']>;
     createdAt: (
       parent: T['UserParent'],
       args: {},

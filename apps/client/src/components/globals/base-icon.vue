@@ -8,6 +8,7 @@ const icons = [
   require('@fortawesome/free-solid-svg-icons/faSync'),
   require('@fortawesome/free-solid-svg-icons/faUser'),
   require('@fortawesome/free-solid-svg-icons/faPaperPlane'),
+  require('@fortawesome/free-solid-svg-icons/faTimesCircle'),
 ];
 
 fontAwesomeIconLibrary.add(icons.map(icon => icon.definition));

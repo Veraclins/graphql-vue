@@ -12,11 +12,13 @@ export default {
   data() {
     return {
       username: '',
+      email: '',
       password: '',
-      name: '',
       resetEmail: '',
+      usernamePlaceHolder: 'Email/Username',
       authError: null,
       isSuccess: false,
+      isSignUp: false,
       inProgress: false,
       formProperties: {},
       showForgetPassword: false,
@@ -39,7 +41,6 @@ export default {
         // This redirects to home page
         await login(this.username, this.password);
       } catch (err) {
-        console.log(JSON.parse(JSON.stringify(err)));
         this.setError(err);
       }
 
@@ -53,9 +54,8 @@ export default {
 
       // This redirects to home page
       try {
-        await signup(this.username, this.password, this.username);
+        await signup(this.email, this.password, this.username);
         this.isSuccess = true;
-        this.logIn();
       } catch (err) {
         this.setError(err);
       }
@@ -87,6 +87,8 @@ export default {
         rightAction: this.showLogInForm,
         action: this.signUp,
       };
+      this.isSignUp = true;
+      this.usernamePlaceHolder = 'Username';
       this.clearErrors();
       this.clearContent();
     },
@@ -102,11 +104,13 @@ export default {
         action: this.logIn,
       };
       this.clearErrors();
+      this.isSignUp = false;
       this.clearContent();
     },
 
     showPasswordResetForm() {
       this.clearErrors();
+      this.isSignUp = false;
       this.clearContent();
       this.showForgetPassword = true;
     },
@@ -118,6 +122,7 @@ export default {
 
     clearContent() {
       this.username = '';
+      this.email = '';
       this.password = '';
       this.resetEmail = '';
       this.showForgetPassword = false;
@@ -125,8 +130,8 @@ export default {
     },
 
     setError(error) {
-      if (typeof error.description === 'string') {
-        this.authError = error.description;
+      if (typeof error.message === 'string') {
+        this.authError = error.message.replace('GraphQL error: ', '');
       } else {
         this.authError = error.policy;
       }
@@ -144,7 +149,7 @@ export default {
         :class="[$style.messageContainer, $style.successContainer]"
       >
         <div :class="$style.textKeepNewLine">
-          <span>Sign Up Successfull! Logging in...</span>
+          <span>Sign Up Successfull! </span>
           <BaseIcon :class="$style.pullRight" name="sync" spin />
         </div>
       </div>
@@ -155,7 +160,17 @@ export default {
         <div :class="$style.textKeepNewLine">{{ authError }}</div>
       </div>
       <form :class="$style.form" @submit.prevent="formProperties.action">
-        <BaseInput v-model="username" name="username" placeholder="Email" />
+        <BaseInput
+          v-model="username"
+          name="username"
+          :placeholder="usernamePlaceHolder"
+        />
+        <BaseInput
+          v-if="isSignUp"
+          v-model="email"
+          name="email"
+          placeholder="Email"
+        />
         <BaseInput
           v-model="password"
           name="password"
@@ -248,7 +263,7 @@ export default {
 .loginTitle {
   padding: 20px 0;
   font-size: 20px;
-  color: $color-login-form-title;
+  color: $color-primary;
   text-align: center;
 }
 
@@ -262,7 +277,7 @@ export default {
   width: 50%;
   padding: 20px 20px 50px;
   margin: auto;
-  background: $color-login-form-container;
+  background: $color-main;
 }
 
 .pullLeft {
@@ -276,20 +291,20 @@ export default {
 .messageContainer {
   padding: 10px;
   margin-bottom: 20px;
-  color: $color-error-text;
+  color: $color-main;
   text-align: left;
 }
 
 .errorContainer {
-  background: $color-error-container;
+  background: $color-error;
 }
 
 .successContainer {
-  background: $color-success-container;
+  background: $color-success;
 }
 
 .successMessage {
-  color: $color-link-text;
+  color: $color-main;
 }
 
 .textKeepNewLine {

@@ -1,21 +1,7 @@
-import { AuthenticationError } from '@errors';
+import { AuthenticationError, NotFoundError } from '@errors';
+import { STATUS } from '@resolvers/Request';
 import { Context } from '@utils/interfaces';
 import { createToken } from '@utils/jwt';
-import fs from 'fs';
-import path from 'path';
-
-// Require all the modules in the specified directory
-export const mergeDirectoryModules = (dirPath: string) =>
-  fs
-    .readdirSync(dirPath, 'utf8')
-    .filter(filename => !/^[_|index.]/.test(filename))
-    .reduce(
-      (accumulator, filename) => ({
-        ...accumulator,
-        ...require(path.resolve(dirPath, filename)).default,
-      }),
-      {}
-    );
 
 export const getLoggedInUser = (context: Context) => {
   const { user } = context;
@@ -23,13 +9,39 @@ export const getLoggedInUser = (context: Context) => {
   return user;
 };
 
-export const isOwner = (userId: string, resourceId: string) =>
-  userId === resourceId;
-
 export const getAuthPayload = (user: any) => {
   const { id, role } = user;
   return {
     token: createToken({ id, role }),
     user,
   };
+};
+
+interface StatusOption {
+  id: string;
+  status: STATUS;
+  conditions: STATUS[];
+}
+export const setRequestStatus = async (
+  context: Context,
+  option: StatusOption
+) => {
+  const { id, status, conditions } = option;
+  const requestExists = await context.prisma.$exists.request({
+    id,
+    status_in: conditions,
+  });
+  const message =
+    status === 'APPROVED'
+      ? 'already been approved/resolved'
+      : status === 'DISAPPROVED'
+      ? 'already been disapproved/resolved'
+      : 'not been approved yet';
+  if (!requestExists)
+    throw new NotFoundError(`The request does not exist or it has ${message}`);
+
+  return context.prisma.updateRequest({
+    where: { id },
+    data: { status },
+  });
 };

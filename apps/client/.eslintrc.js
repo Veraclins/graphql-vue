@@ -17,25 +17,18 @@ module.exports = {
     // https://github.com/sindresorhus/eslint-plugin-unicorn
     'plugin:unicorn/recommended',
   ],
-  plugins: ['graphql', 'unicorn'],
+  plugins: ['prettier', 'graphql', 'unicorn'],
   rules: {
+    "prettier/prettier": "error",
     // Only allow debugger in development
     'no-debugger': process.env.PRE_COMMIT ? 'error' : 'off',
     // Only allow `console.log` in development
-    'no-console': process.env.PRE_COMMIT
-      ? [
-          'error',
-          {
-            allow: ['warn', 'error'],
-          },
-        ]
-      : 'off',
-    'object-property-newline': [
+    'no-console': process.env.PRE_COMMIT ? [
       'error',
       {
-        allowAllPropertiesOnSameLine: true,
+        allow: ['warn', 'error'],
       },
-    ],
+    ] : 'off',
     'vue/component-name-in-template-casing': [
       'error',
       'PascalCase',
@@ -58,8 +51,7 @@ module.exports = {
       },
     ],
   },
-  overrides: [
-    {
+  overrides: [{
       files: ['src/**/*', 'tests/unit/**/*', 'tests/e2e/**/*'],
       excludedFiles: 'app.config.js',
       parserOptions: {

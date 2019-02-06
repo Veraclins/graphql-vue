@@ -1,21 +1,27 @@
-// CONTENT
-$color-body-bg: #f9f7f5;
-$color-text: #444;
-$color-heading-text: #35495e;
-$color-login-form-title: #909090;
-$color-login-form-container: #f9f6f4;
-$color-success-container: #44e276;
-$color-error-container: #f84b4b;
-$color-error-text: white;
+$color-main: white;
+$color-main-bg: #111B63;
+$color-primary: #3359df;
+$color-secondary: #ffaf30;
+$color-success: #44e276;
+$color-error: #f84b4b;
+
+// TEXT
+$color-text: black;
+
+
 
 // LINKS
-$color-link-text: #39a275;
-$color-link-text-active: $color-text;
+$color-link-text: $color-secondary;
 
 // INPUTS
-$color-input-border: lighten($color-heading-text, 50%);
+$color-input-fill: lighten($color-secondary, 50%);
+$color-input-border: lighten($color-primary, 50%);
 
 // BUTTONS
-$color-button-bg: $color-link-text;
+$color-button-bg: $color-secondary;
+$color-outline-button-bg: $color-primary;
+$color-outline-button-border: $color-secondary;
 $color-button-disabled-bg: darken(desaturate($color-button-bg, 20%), 10%);
-$color-button-text: white;
+$color-outline-button-disabled-bg: darken(desaturate($color-outline-button-bg, 20%), 10%);
+$color-outline-button-disabled-border: darken(desaturate($color-outline-button-border, 20%), 10%);
+$color-button-text: $color-main;

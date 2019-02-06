@@ -1,50 +1,50 @@
 import { GraphQLResolveInfo, GraphQLSchema } from 'graphql'
-import { Options } from 'graphql-binding'
 import { IResolvers } from 'graphql-tools/dist/Interfaces'
-import { BasePrismaOptions, makePrismaBindingClass } from 'prisma-binding'
+import { Options } from 'graphql-binding'
+import { makePrismaBindingClass, BasePrismaOptions } from 'prisma-binding'
 
 export interface Query {
-    users: <T = Array<User | null>>(args: { where?: UserWhereInput | null, orderBy?: UserOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    requests: <T = Array<Request | null>>(args: { where?: RequestWhereInput | null, orderBy?: RequestOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ;
-    request: <T = Request | null>(args: { where: RequestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ;
-    usersConnection: <T = UserConnection>(args: { where?: UserWhereInput | null, orderBy?: UserOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    requestsConnection: <T = RequestConnection>(args: { where?: RequestWhereInput | null, orderBy?: RequestOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null>;
+    users: <T = Array<User | null>>(args: { where?: UserWhereInput | null, orderBy?: UserOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    requests: <T = Array<Request | null>>(args: { where?: RequestWhereInput | null, orderBy?: RequestOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    request: <T = Request | null>(args: { where: RequestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    usersConnection: <T = UserConnection>(args: { where?: UserWhereInput | null, orderBy?: UserOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    requestsConnection: <T = RequestConnection>(args: { where?: RequestWhereInput | null, orderBy?: RequestOrderByInput | null, skip?: Int | null, after?: String | null, before?: String | null, first?: Int | null, last?: Int | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> 
   }
 
 export interface Mutation {
-    createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    createRequest: <T = Request>(args: { data: RequestCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ;
-    updateRequest: <T = Request | null>(args: { data: RequestUpdateInput, where: RequestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ;
-    deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ;
-    deleteRequest: <T = Request | null>(args: { where: RequestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ;
-    upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    upsertRequest: <T = Request>(args: { where: RequestWhereUniqueInput, create: RequestCreateInput, update: RequestUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateManyMutationInput, where?: UserWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    updateManyRequests: <T = BatchPayload>(args: { data: RequestUpdateManyMutationInput, where?: RequestWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    deleteManyRequests: <T = BatchPayload>(args: { where?: RequestWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ;
-    executeRaw: <T = Json>(args: { database?: PrismaDatabase | null, query: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T>;
+    createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    createRequest: <T = Request>(args: { data: RequestCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    updateRequest: <T = Request | null>(args: { data: RequestUpdateInput, where: RequestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    deleteRequest: <T = Request | null>(args: { where: RequestWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T | null> ,
+    upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertRequest: <T = Request>(args: { where: RequestWhereUniqueInput, create: RequestCreateInput, update: RequestUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateManyMutationInput, where?: UserWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateManyRequests: <T = BatchPayload>(args: { data: RequestUpdateManyMutationInput, where?: RequestWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteManyRequests: <T = BatchPayload>(args: { where?: RequestWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    executeRaw: <T = Json>(args: { database?: PrismaDatabase | null, query: String }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
 export interface Subscription {
-    user: <T = UserSubscriptionPayload | null>(args: { where?: UserSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ;
-    request: <T = RequestSubscriptionPayload | null>(args: { where?: RequestSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>>;
+    user: <T = UserSubscriptionPayload | null>(args: { where?: UserSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> ,
+    request: <T = RequestSubscriptionPayload | null>(args: { where?: RequestSubscriptionWhereInput | null }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T | null>> 
   }
 
 export interface Exists {
-  User: (where?: UserWhereInput) => Promise<boolean>;
-  Request: (where?: RequestWhereInput) => Promise<boolean>;
+  User: (where?: UserWhereInput) => Promise<boolean>
+  Request: (where?: RequestWhereInput) => Promise<boolean>
 }
 
 export interface Prisma {
-  query: Query;
-  mutation: Mutation;
-  subscription: Subscription;
-  exists: Exists;
-  request: <T = any>(query: string, variables?: {[key: string]: any}) => Promise<T>;
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+  exists: Exists
+  request: <T = any>(query: string, variables?: {[key: string]: any}) => Promise<T>
   delegate(operation: 'query' | 'mutation', fieldName: string, args: {
     [key: string]: any;
 }, infoOrQuery?: GraphQLResolveInfo | string, options?: Options): Promise<any>;
@@ -54,7 +54,9 @@ delegateSubscription(fieldName: string, args?: {
 getAbstractResolvers(filterSchema?: GraphQLSchema | string): IResolvers;
 }
 
-export type BindingConstructor<T> = new(options: BasePrismaOptions) => T
+export interface BindingConstructor<T> {
+  new(options: BasePrismaOptions): T
+}
 /**
  * Type Defs
 */
@@ -1271,9 +1273,9 @@ input UserWhereUniqueInput {
   email: String
   username: String
 }
-`;
+`
 
-export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDefs});
+export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDefs})
 
 /**
  * Types
@@ -1281,9 +1283,9 @@ export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDe
 
 export type MutationType =   'CREATED' |
   'UPDATED' |
-  'DELETED';
+  'DELETED'
 
-export type PrismaDatabase =   'default';
+export type PrismaDatabase =   'default'
 
 export type RequestOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -1298,15 +1300,15 @@ export type RequestOrderByInput =   'id_ASC' |
   'description_ASC' |
   'description_DESC' |
   'status_ASC' |
-  'status_DESC';
+  'status_DESC'
 
 export type ROLE =   'USER' |
-  'ADMIN';
+  'ADMIN'
 
 export type STATUS =   'PENDING' |
   'APPROVED' |
   'DISAPPROVED' |
-  'RESOLVED';
+  'RESOLVED'
 
 export type UserOrderByInput =   'id_ASC' |
   'id_DESC' |
@@ -1325,457 +1327,457 @@ export type UserOrderByInput =   'id_ASC' |
   'password_ASC' |
   'password_DESC' |
   'role_ASC' |
-  'role_DESC';
+  'role_DESC'
 
 export interface RequestCreateInput {
-  title: String;
-  device: String;
-  description: String;
-  status?: STATUS | null;
-  owner: UserCreateOneWithoutRequestsInput;
+  title: String
+  device: String
+  description: String
+  status?: STATUS | null
+  owner: UserCreateOneWithoutRequestsInput
 }
 
 export interface RequestCreateManyWithoutOwnerInput {
-  create?: RequestCreateWithoutOwnerInput[] | RequestCreateWithoutOwnerInput | null;
-  connect?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null;
+  create?: RequestCreateWithoutOwnerInput[] | RequestCreateWithoutOwnerInput | null
+  connect?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null
 }
 
 export interface RequestCreateWithoutOwnerInput {
-  title: String;
-  device: String;
-  description: String;
-  status?: STATUS | null;
+  title: String
+  device: String
+  description: String
+  status?: STATUS | null
 }
 
 export interface RequestScalarWhereInput {
-  AND?: RequestScalarWhereInput[] | RequestScalarWhereInput | null;
-  OR?: RequestScalarWhereInput[] | RequestScalarWhereInput | null;
-  NOT?: RequestScalarWhereInput[] | RequestScalarWhereInput | null;
-  id?: ID_Input | null;
-  id_not?: ID_Input | null;
-  id_in?: ID_Output[] | ID_Output | null;
-  id_not_in?: ID_Output[] | ID_Output | null;
-  id_lt?: ID_Input | null;
-  id_lte?: ID_Input | null;
-  id_gt?: ID_Input | null;
-  id_gte?: ID_Input | null;
-  id_contains?: ID_Input | null;
-  id_not_contains?: ID_Input | null;
-  id_starts_with?: ID_Input | null;
-  id_not_starts_with?: ID_Input | null;
-  id_ends_with?: ID_Input | null;
-  id_not_ends_with?: ID_Input | null;
-  createdAt?: DateTime | null;
-  createdAt_not?: DateTime | null;
-  createdAt_in?: DateTime[] | DateTime | null;
-  createdAt_not_in?: DateTime[] | DateTime | null;
-  createdAt_lt?: DateTime | null;
-  createdAt_lte?: DateTime | null;
-  createdAt_gt?: DateTime | null;
-  createdAt_gte?: DateTime | null;
-  updatedAt?: DateTime | null;
-  updatedAt_not?: DateTime | null;
-  updatedAt_in?: DateTime[] | DateTime | null;
-  updatedAt_not_in?: DateTime[] | DateTime | null;
-  updatedAt_lt?: DateTime | null;
-  updatedAt_lte?: DateTime | null;
-  updatedAt_gt?: DateTime | null;
-  updatedAt_gte?: DateTime | null;
-  title?: String | null;
-  title_not?: String | null;
-  title_in?: String[] | String | null;
-  title_not_in?: String[] | String | null;
-  title_lt?: String | null;
-  title_lte?: String | null;
-  title_gt?: String | null;
-  title_gte?: String | null;
-  title_contains?: String | null;
-  title_not_contains?: String | null;
-  title_starts_with?: String | null;
-  title_not_starts_with?: String | null;
-  title_ends_with?: String | null;
-  title_not_ends_with?: String | null;
-  device?: String | null;
-  device_not?: String | null;
-  device_in?: String[] | String | null;
-  device_not_in?: String[] | String | null;
-  device_lt?: String | null;
-  device_lte?: String | null;
-  device_gt?: String | null;
-  device_gte?: String | null;
-  device_contains?: String | null;
-  device_not_contains?: String | null;
-  device_starts_with?: String | null;
-  device_not_starts_with?: String | null;
-  device_ends_with?: String | null;
-  device_not_ends_with?: String | null;
-  description?: String | null;
-  description_not?: String | null;
-  description_in?: String[] | String | null;
-  description_not_in?: String[] | String | null;
-  description_lt?: String | null;
-  description_lte?: String | null;
-  description_gt?: String | null;
-  description_gte?: String | null;
-  description_contains?: String | null;
-  description_not_contains?: String | null;
-  description_starts_with?: String | null;
-  description_not_starts_with?: String | null;
-  description_ends_with?: String | null;
-  description_not_ends_with?: String | null;
-  status?: STATUS | null;
-  status_not?: STATUS | null;
-  status_in?: STATUS[] | STATUS | null;
-  status_not_in?: STATUS[] | STATUS | null;
+  AND?: RequestScalarWhereInput[] | RequestScalarWhereInput | null
+  OR?: RequestScalarWhereInput[] | RequestScalarWhereInput | null
+  NOT?: RequestScalarWhereInput[] | RequestScalarWhereInput | null
+  id?: ID_Input | null
+  id_not?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  id_not_in?: ID_Output[] | ID_Output | null
+  id_lt?: ID_Input | null
+  id_lte?: ID_Input | null
+  id_gt?: ID_Input | null
+  id_gte?: ID_Input | null
+  id_contains?: ID_Input | null
+  id_not_contains?: ID_Input | null
+  id_starts_with?: ID_Input | null
+  id_not_starts_with?: ID_Input | null
+  id_ends_with?: ID_Input | null
+  id_not_ends_with?: ID_Input | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  title?: String | null
+  title_not?: String | null
+  title_in?: String[] | String | null
+  title_not_in?: String[] | String | null
+  title_lt?: String | null
+  title_lte?: String | null
+  title_gt?: String | null
+  title_gte?: String | null
+  title_contains?: String | null
+  title_not_contains?: String | null
+  title_starts_with?: String | null
+  title_not_starts_with?: String | null
+  title_ends_with?: String | null
+  title_not_ends_with?: String | null
+  device?: String | null
+  device_not?: String | null
+  device_in?: String[] | String | null
+  device_not_in?: String[] | String | null
+  device_lt?: String | null
+  device_lte?: String | null
+  device_gt?: String | null
+  device_gte?: String | null
+  device_contains?: String | null
+  device_not_contains?: String | null
+  device_starts_with?: String | null
+  device_not_starts_with?: String | null
+  device_ends_with?: String | null
+  device_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
+  status?: STATUS | null
+  status_not?: STATUS | null
+  status_in?: STATUS[] | STATUS | null
+  status_not_in?: STATUS[] | STATUS | null
 }
 
 export interface RequestSubscriptionWhereInput {
-  AND?: RequestSubscriptionWhereInput[] | RequestSubscriptionWhereInput | null;
-  OR?: RequestSubscriptionWhereInput[] | RequestSubscriptionWhereInput | null;
-  NOT?: RequestSubscriptionWhereInput[] | RequestSubscriptionWhereInput | null;
-  mutation_in?: MutationType[] | MutationType | null;
-  updatedFields_contains?: String | null;
-  updatedFields_contains_every?: String[] | String | null;
-  updatedFields_contains_some?: String[] | String | null;
-  node?: RequestWhereInput | null;
+  AND?: RequestSubscriptionWhereInput[] | RequestSubscriptionWhereInput | null
+  OR?: RequestSubscriptionWhereInput[] | RequestSubscriptionWhereInput | null
+  NOT?: RequestSubscriptionWhereInput[] | RequestSubscriptionWhereInput | null
+  mutation_in?: MutationType[] | MutationType | null
+  updatedFields_contains?: String | null
+  updatedFields_contains_every?: String[] | String | null
+  updatedFields_contains_some?: String[] | String | null
+  node?: RequestWhereInput | null
 }
 
 export interface RequestUpdateInput {
-  title?: String | null;
-  device?: String | null;
-  description?: String | null;
-  status?: STATUS | null;
-  owner?: UserUpdateOneRequiredWithoutRequestsInput | null;
+  title?: String | null
+  device?: String | null
+  description?: String | null
+  status?: STATUS | null
+  owner?: UserUpdateOneRequiredWithoutRequestsInput | null
 }
 
 export interface RequestUpdateManyDataInput {
-  title?: String | null;
-  device?: String | null;
-  description?: String | null;
-  status?: STATUS | null;
+  title?: String | null
+  device?: String | null
+  description?: String | null
+  status?: STATUS | null
 }
 
 export interface RequestUpdateManyMutationInput {
-  title?: String | null;
-  device?: String | null;
-  description?: String | null;
-  status?: STATUS | null;
+  title?: String | null
+  device?: String | null
+  description?: String | null
+  status?: STATUS | null
 }
 
 export interface RequestUpdateManyWithoutOwnerInput {
-  create?: RequestCreateWithoutOwnerInput[] | RequestCreateWithoutOwnerInput | null;
-  connect?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null;
-  set?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null;
-  disconnect?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null;
-  delete?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null;
-  update?: RequestUpdateWithWhereUniqueWithoutOwnerInput[] | RequestUpdateWithWhereUniqueWithoutOwnerInput | null;
-  updateMany?: RequestUpdateManyWithWhereNestedInput[] | RequestUpdateManyWithWhereNestedInput | null;
-  deleteMany?: RequestScalarWhereInput[] | RequestScalarWhereInput | null;
-  upsert?: RequestUpsertWithWhereUniqueWithoutOwnerInput[] | RequestUpsertWithWhereUniqueWithoutOwnerInput | null;
+  create?: RequestCreateWithoutOwnerInput[] | RequestCreateWithoutOwnerInput | null
+  connect?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null
+  set?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null
+  disconnect?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null
+  delete?: RequestWhereUniqueInput[] | RequestWhereUniqueInput | null
+  update?: RequestUpdateWithWhereUniqueWithoutOwnerInput[] | RequestUpdateWithWhereUniqueWithoutOwnerInput | null
+  updateMany?: RequestUpdateManyWithWhereNestedInput[] | RequestUpdateManyWithWhereNestedInput | null
+  deleteMany?: RequestScalarWhereInput[] | RequestScalarWhereInput | null
+  upsert?: RequestUpsertWithWhereUniqueWithoutOwnerInput[] | RequestUpsertWithWhereUniqueWithoutOwnerInput | null
 }
 
 export interface RequestUpdateManyWithWhereNestedInput {
-  where: RequestScalarWhereInput;
-  data: RequestUpdateManyDataInput;
+  where: RequestScalarWhereInput
+  data: RequestUpdateManyDataInput
 }
 
 export interface RequestUpdateWithoutOwnerDataInput {
-  title?: String | null;
-  device?: String | null;
-  description?: String | null;
-  status?: STATUS | null;
+  title?: String | null
+  device?: String | null
+  description?: String | null
+  status?: STATUS | null
 }
 
 export interface RequestUpdateWithWhereUniqueWithoutOwnerInput {
-  where: RequestWhereUniqueInput;
-  data: RequestUpdateWithoutOwnerDataInput;
+  where: RequestWhereUniqueInput
+  data: RequestUpdateWithoutOwnerDataInput
 }
 
 export interface RequestUpsertWithWhereUniqueWithoutOwnerInput {
-  where: RequestWhereUniqueInput;
-  update: RequestUpdateWithoutOwnerDataInput;
-  create: RequestCreateWithoutOwnerInput;
+  where: RequestWhereUniqueInput
+  update: RequestUpdateWithoutOwnerDataInput
+  create: RequestCreateWithoutOwnerInput
 }
 
 export interface RequestWhereInput {
-  AND?: RequestWhereInput[] | RequestWhereInput | null;
-  OR?: RequestWhereInput[] | RequestWhereInput | null;
-  NOT?: RequestWhereInput[] | RequestWhereInput | null;
-  id?: ID_Input | null;
-  id_not?: ID_Input | null;
-  id_in?: ID_Output[] | ID_Output | null;
-  id_not_in?: ID_Output[] | ID_Output | null;
-  id_lt?: ID_Input | null;
-  id_lte?: ID_Input | null;
-  id_gt?: ID_Input | null;
-  id_gte?: ID_Input | null;
-  id_contains?: ID_Input | null;
-  id_not_contains?: ID_Input | null;
-  id_starts_with?: ID_Input | null;
-  id_not_starts_with?: ID_Input | null;
-  id_ends_with?: ID_Input | null;
-  id_not_ends_with?: ID_Input | null;
-  createdAt?: DateTime | null;
-  createdAt_not?: DateTime | null;
-  createdAt_in?: DateTime[] | DateTime | null;
-  createdAt_not_in?: DateTime[] | DateTime | null;
-  createdAt_lt?: DateTime | null;
-  createdAt_lte?: DateTime | null;
-  createdAt_gt?: DateTime | null;
-  createdAt_gte?: DateTime | null;
-  updatedAt?: DateTime | null;
-  updatedAt_not?: DateTime | null;
-  updatedAt_in?: DateTime[] | DateTime | null;
-  updatedAt_not_in?: DateTime[] | DateTime | null;
-  updatedAt_lt?: DateTime | null;
-  updatedAt_lte?: DateTime | null;
-  updatedAt_gt?: DateTime | null;
-  updatedAt_gte?: DateTime | null;
-  title?: String | null;
-  title_not?: String | null;
-  title_in?: String[] | String | null;
-  title_not_in?: String[] | String | null;
-  title_lt?: String | null;
-  title_lte?: String | null;
-  title_gt?: String | null;
-  title_gte?: String | null;
-  title_contains?: String | null;
-  title_not_contains?: String | null;
-  title_starts_with?: String | null;
-  title_not_starts_with?: String | null;
-  title_ends_with?: String | null;
-  title_not_ends_with?: String | null;
-  device?: String | null;
-  device_not?: String | null;
-  device_in?: String[] | String | null;
-  device_not_in?: String[] | String | null;
-  device_lt?: String | null;
-  device_lte?: String | null;
-  device_gt?: String | null;
-  device_gte?: String | null;
-  device_contains?: String | null;
-  device_not_contains?: String | null;
-  device_starts_with?: String | null;
-  device_not_starts_with?: String | null;
-  device_ends_with?: String | null;
-  device_not_ends_with?: String | null;
-  description?: String | null;
-  description_not?: String | null;
-  description_in?: String[] | String | null;
-  description_not_in?: String[] | String | null;
-  description_lt?: String | null;
-  description_lte?: String | null;
-  description_gt?: String | null;
-  description_gte?: String | null;
-  description_contains?: String | null;
-  description_not_contains?: String | null;
-  description_starts_with?: String | null;
-  description_not_starts_with?: String | null;
-  description_ends_with?: String | null;
-  description_not_ends_with?: String | null;
-  status?: STATUS | null;
-  status_not?: STATUS | null;
-  status_in?: STATUS[] | STATUS | null;
-  status_not_in?: STATUS[] | STATUS | null;
-  owner?: UserWhereInput | null;
+  AND?: RequestWhereInput[] | RequestWhereInput | null
+  OR?: RequestWhereInput[] | RequestWhereInput | null
+  NOT?: RequestWhereInput[] | RequestWhereInput | null
+  id?: ID_Input | null
+  id_not?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  id_not_in?: ID_Output[] | ID_Output | null
+  id_lt?: ID_Input | null
+  id_lte?: ID_Input | null
+  id_gt?: ID_Input | null
+  id_gte?: ID_Input | null
+  id_contains?: ID_Input | null
+  id_not_contains?: ID_Input | null
+  id_starts_with?: ID_Input | null
+  id_not_starts_with?: ID_Input | null
+  id_ends_with?: ID_Input | null
+  id_not_ends_with?: ID_Input | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  title?: String | null
+  title_not?: String | null
+  title_in?: String[] | String | null
+  title_not_in?: String[] | String | null
+  title_lt?: String | null
+  title_lte?: String | null
+  title_gt?: String | null
+  title_gte?: String | null
+  title_contains?: String | null
+  title_not_contains?: String | null
+  title_starts_with?: String | null
+  title_not_starts_with?: String | null
+  title_ends_with?: String | null
+  title_not_ends_with?: String | null
+  device?: String | null
+  device_not?: String | null
+  device_in?: String[] | String | null
+  device_not_in?: String[] | String | null
+  device_lt?: String | null
+  device_lte?: String | null
+  device_gt?: String | null
+  device_gte?: String | null
+  device_contains?: String | null
+  device_not_contains?: String | null
+  device_starts_with?: String | null
+  device_not_starts_with?: String | null
+  device_ends_with?: String | null
+  device_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
+  status?: STATUS | null
+  status_not?: STATUS | null
+  status_in?: STATUS[] | STATUS | null
+  status_not_in?: STATUS[] | STATUS | null
+  owner?: UserWhereInput | null
 }
 
 export interface RequestWhereUniqueInput {
-  id?: ID_Input | null;
+  id?: ID_Input | null
 }
 
 export interface UserCreateInput {
-  firstName?: String | null;
-  lastName?: String | null;
-  email: String;
-  username: String;
-  password: String;
-  role?: ROLE | null;
-  requests?: RequestCreateManyWithoutOwnerInput | null;
+  firstName?: String | null
+  lastName?: String | null
+  email: String
+  username: String
+  password: String
+  role?: ROLE | null
+  requests?: RequestCreateManyWithoutOwnerInput | null
 }
 
 export interface UserCreateOneWithoutRequestsInput {
-  create?: UserCreateWithoutRequestsInput | null;
-  connect?: UserWhereUniqueInput | null;
+  create?: UserCreateWithoutRequestsInput | null
+  connect?: UserWhereUniqueInput | null
 }
 
 export interface UserCreateWithoutRequestsInput {
-  firstName?: String | null;
-  lastName?: String | null;
-  email: String;
-  username: String;
-  password: String;
-  role?: ROLE | null;
+  firstName?: String | null
+  lastName?: String | null
+  email: String
+  username: String
+  password: String
+  role?: ROLE | null
 }
 
 export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput | null;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput | null;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput | null;
-  mutation_in?: MutationType[] | MutationType | null;
-  updatedFields_contains?: String | null;
-  updatedFields_contains_every?: String[] | String | null;
-  updatedFields_contains_some?: String[] | String | null;
-  node?: UserWhereInput | null;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput | null
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput | null
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput | null
+  mutation_in?: MutationType[] | MutationType | null
+  updatedFields_contains?: String | null
+  updatedFields_contains_every?: String[] | String | null
+  updatedFields_contains_some?: String[] | String | null
+  node?: UserWhereInput | null
 }
 
 export interface UserUpdateInput {
-  firstName?: String | null;
-  lastName?: String | null;
-  email?: String | null;
-  username?: String | null;
-  password?: String | null;
-  role?: ROLE | null;
-  requests?: RequestUpdateManyWithoutOwnerInput | null;
+  firstName?: String | null
+  lastName?: String | null
+  email?: String | null
+  username?: String | null
+  password?: String | null
+  role?: ROLE | null
+  requests?: RequestUpdateManyWithoutOwnerInput | null
 }
 
 export interface UserUpdateManyMutationInput {
-  firstName?: String | null;
-  lastName?: String | null;
-  email?: String | null;
-  username?: String | null;
-  password?: String | null;
-  role?: ROLE | null;
+  firstName?: String | null
+  lastName?: String | null
+  email?: String | null
+  username?: String | null
+  password?: String | null
+  role?: ROLE | null
 }
 
 export interface UserUpdateOneRequiredWithoutRequestsInput {
-  create?: UserCreateWithoutRequestsInput | null;
-  connect?: UserWhereUniqueInput | null;
-  update?: UserUpdateWithoutRequestsDataInput | null;
-  upsert?: UserUpsertWithoutRequestsInput | null;
+  create?: UserCreateWithoutRequestsInput | null
+  connect?: UserWhereUniqueInput | null
+  update?: UserUpdateWithoutRequestsDataInput | null
+  upsert?: UserUpsertWithoutRequestsInput | null
 }
 
 export interface UserUpdateWithoutRequestsDataInput {
-  firstName?: String | null;
-  lastName?: String | null;
-  email?: String | null;
-  username?: String | null;
-  password?: String | null;
-  role?: ROLE | null;
+  firstName?: String | null
+  lastName?: String | null
+  email?: String | null
+  username?: String | null
+  password?: String | null
+  role?: ROLE | null
 }
 
 export interface UserUpsertWithoutRequestsInput {
-  update: UserUpdateWithoutRequestsDataInput;
-  create: UserCreateWithoutRequestsInput;
+  update: UserUpdateWithoutRequestsDataInput
+  create: UserCreateWithoutRequestsInput
 }
 
 export interface UserWhereInput {
-  AND?: UserWhereInput[] | UserWhereInput | null;
-  OR?: UserWhereInput[] | UserWhereInput | null;
-  NOT?: UserWhereInput[] | UserWhereInput | null;
-  id?: ID_Input | null;
-  id_not?: ID_Input | null;
-  id_in?: ID_Output[] | ID_Output | null;
-  id_not_in?: ID_Output[] | ID_Output | null;
-  id_lt?: ID_Input | null;
-  id_lte?: ID_Input | null;
-  id_gt?: ID_Input | null;
-  id_gte?: ID_Input | null;
-  id_contains?: ID_Input | null;
-  id_not_contains?: ID_Input | null;
-  id_starts_with?: ID_Input | null;
-  id_not_starts_with?: ID_Input | null;
-  id_ends_with?: ID_Input | null;
-  id_not_ends_with?: ID_Input | null;
-  createdAt?: DateTime | null;
-  createdAt_not?: DateTime | null;
-  createdAt_in?: DateTime[] | DateTime | null;
-  createdAt_not_in?: DateTime[] | DateTime | null;
-  createdAt_lt?: DateTime | null;
-  createdAt_lte?: DateTime | null;
-  createdAt_gt?: DateTime | null;
-  createdAt_gte?: DateTime | null;
-  updatedAt?: DateTime | null;
-  updatedAt_not?: DateTime | null;
-  updatedAt_in?: DateTime[] | DateTime | null;
-  updatedAt_not_in?: DateTime[] | DateTime | null;
-  updatedAt_lt?: DateTime | null;
-  updatedAt_lte?: DateTime | null;
-  updatedAt_gt?: DateTime | null;
-  updatedAt_gte?: DateTime | null;
-  firstName?: String | null;
-  firstName_not?: String | null;
-  firstName_in?: String[] | String | null;
-  firstName_not_in?: String[] | String | null;
-  firstName_lt?: String | null;
-  firstName_lte?: String | null;
-  firstName_gt?: String | null;
-  firstName_gte?: String | null;
-  firstName_contains?: String | null;
-  firstName_not_contains?: String | null;
-  firstName_starts_with?: String | null;
-  firstName_not_starts_with?: String | null;
-  firstName_ends_with?: String | null;
-  firstName_not_ends_with?: String | null;
-  lastName?: String | null;
-  lastName_not?: String | null;
-  lastName_in?: String[] | String | null;
-  lastName_not_in?: String[] | String | null;
-  lastName_lt?: String | null;
-  lastName_lte?: String | null;
-  lastName_gt?: String | null;
-  lastName_gte?: String | null;
-  lastName_contains?: String | null;
-  lastName_not_contains?: String | null;
-  lastName_starts_with?: String | null;
-  lastName_not_starts_with?: String | null;
-  lastName_ends_with?: String | null;
-  lastName_not_ends_with?: String | null;
-  email?: String | null;
-  email_not?: String | null;
-  email_in?: String[] | String | null;
-  email_not_in?: String[] | String | null;
-  email_lt?: String | null;
-  email_lte?: String | null;
-  email_gt?: String | null;
-  email_gte?: String | null;
-  email_contains?: String | null;
-  email_not_contains?: String | null;
-  email_starts_with?: String | null;
-  email_not_starts_with?: String | null;
-  email_ends_with?: String | null;
-  email_not_ends_with?: String | null;
-  username?: String | null;
-  username_not?: String | null;
-  username_in?: String[] | String | null;
-  username_not_in?: String[] | String | null;
-  username_lt?: String | null;
-  username_lte?: String | null;
-  username_gt?: String | null;
-  username_gte?: String | null;
-  username_contains?: String | null;
-  username_not_contains?: String | null;
-  username_starts_with?: String | null;
-  username_not_starts_with?: String | null;
-  username_ends_with?: String | null;
-  username_not_ends_with?: String | null;
-  password?: String | null;
-  password_not?: String | null;
-  password_in?: String[] | String | null;
-  password_not_in?: String[] | String | null;
-  password_lt?: String | null;
-  password_lte?: String | null;
-  password_gt?: String | null;
-  password_gte?: String | null;
-  password_contains?: String | null;
-  password_not_contains?: String | null;
-  password_starts_with?: String | null;
-  password_not_starts_with?: String | null;
-  password_ends_with?: String | null;
-  password_not_ends_with?: String | null;
-  role?: ROLE | null;
-  role_not?: ROLE | null;
-  role_in?: ROLE[] | ROLE | null;
-  role_not_in?: ROLE[] | ROLE | null;
-  requests_every?: RequestWhereInput | null;
-  requests_some?: RequestWhereInput | null;
-  requests_none?: RequestWhereInput | null;
+  AND?: UserWhereInput[] | UserWhereInput | null
+  OR?: UserWhereInput[] | UserWhereInput | null
+  NOT?: UserWhereInput[] | UserWhereInput | null
+  id?: ID_Input | null
+  id_not?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  id_not_in?: ID_Output[] | ID_Output | null
+  id_lt?: ID_Input | null
+  id_lte?: ID_Input | null
+  id_gt?: ID_Input | null
+  id_gte?: ID_Input | null
+  id_contains?: ID_Input | null
+  id_not_contains?: ID_Input | null
+  id_starts_with?: ID_Input | null
+  id_not_starts_with?: ID_Input | null
+  id_ends_with?: ID_Input | null
+  id_not_ends_with?: ID_Input | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
+  firstName?: String | null
+  firstName_not?: String | null
+  firstName_in?: String[] | String | null
+  firstName_not_in?: String[] | String | null
+  firstName_lt?: String | null
+  firstName_lte?: String | null
+  firstName_gt?: String | null
+  firstName_gte?: String | null
+  firstName_contains?: String | null
+  firstName_not_contains?: String | null
+  firstName_starts_with?: String | null
+  firstName_not_starts_with?: String | null
+  firstName_ends_with?: String | null
+  firstName_not_ends_with?: String | null
+  lastName?: String | null
+  lastName_not?: String | null
+  lastName_in?: String[] | String | null
+  lastName_not_in?: String[] | String | null
+  lastName_lt?: String | null
+  lastName_lte?: String | null
+  lastName_gt?: String | null
+  lastName_gte?: String | null
+  lastName_contains?: String | null
+  lastName_not_contains?: String | null
+  lastName_starts_with?: String | null
+  lastName_not_starts_with?: String | null
+  lastName_ends_with?: String | null
+  lastName_not_ends_with?: String | null
+  email?: String | null
+  email_not?: String | null
+  email_in?: String[] | String | null
+  email_not_in?: String[] | String | null
+  email_lt?: String | null
+  email_lte?: String | null
+  email_gt?: String | null
+  email_gte?: String | null
+  email_contains?: String | null
+  email_not_contains?: String | null
+  email_starts_with?: String | null
+  email_not_starts_with?: String | null
+  email_ends_with?: String | null
+  email_not_ends_with?: String | null
+  username?: String | null
+  username_not?: String | null
+  username_in?: String[] | String | null
+  username_not_in?: String[] | String | null
+  username_lt?: String | null
+  username_lte?: String | null
+  username_gt?: String | null
+  username_gte?: String | null
+  username_contains?: String | null
+  username_not_contains?: String | null
+  username_starts_with?: String | null
+  username_not_starts_with?: String | null
+  username_ends_with?: String | null
+  username_not_ends_with?: String | null
+  password?: String | null
+  password_not?: String | null
+  password_in?: String[] | String | null
+  password_not_in?: String[] | String | null
+  password_lt?: String | null
+  password_lte?: String | null
+  password_gt?: String | null
+  password_gte?: String | null
+  password_contains?: String | null
+  password_not_contains?: String | null
+  password_starts_with?: String | null
+  password_not_starts_with?: String | null
+  password_ends_with?: String | null
+  password_not_ends_with?: String | null
+  role?: ROLE | null
+  role_not?: ROLE | null
+  role_in?: ROLE[] | ROLE | null
+  role_not_in?: ROLE[] | ROLE | null
+  requests_every?: RequestWhereInput | null
+  requests_some?: RequestWhereInput | null
+  requests_none?: RequestWhereInput | null
 }
 
 export interface UserWhereUniqueInput {
-  id?: ID_Input | null;
-  email?: String | null;
-  username?: String | null;
+  id?: ID_Input | null
+  email?: String | null
+  username?: String | null
 }
 
 /*
@@ -1783,19 +1785,19 @@ export interface UserWhereUniqueInput {
 
  */
 export interface Node {
-  id: ID_Output;
+  id: ID_Output
 }
 
 export interface AggregateRequest {
-  count: Int;
+  count: Int
 }
 
 export interface AggregateUser {
-  count: Int;
+  count: Int
 }
 
 export interface BatchPayload {
-  count: Long;
+  count: Long
 }
 
 /*
@@ -1803,21 +1805,21 @@ export interface BatchPayload {
 
  */
 export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String | null;
-  endCursor?: String | null;
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String | null
+  endCursor?: String | null
 }
 
 export interface Request extends Node {
-  id: ID_Output;
-  createdAt: DateTime;
-  updatedAt: DateTime;
-  title: String;
-  device: String;
-  description: String;
-  status: STATUS;
-  owner: User;
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  title: String
+  device: String
+  description: String
+  status: STATUS
+  owner: User
 }
 
 /*
@@ -1825,9 +1827,9 @@ export interface Request extends Node {
 
  */
 export interface RequestConnection {
-  pageInfo: PageInfo;
-  edges: Array<RequestEdge | null>;
-  aggregate: AggregateRequest;
+  pageInfo: PageInfo
+  edges: Array<RequestEdge | null>
+  aggregate: AggregateRequest
 }
 
 /*
@@ -1835,38 +1837,38 @@ export interface RequestConnection {
 
  */
 export interface RequestEdge {
-  node: Request;
-  cursor: String;
+  node: Request
+  cursor: String
 }
 
 export interface RequestPreviousValues {
-  id: ID_Output;
-  createdAt: DateTime;
-  updatedAt: DateTime;
-  title: String;
-  device: String;
-  description: String;
-  status: STATUS;
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  title: String
+  device: String
+  description: String
+  status: STATUS
 }
 
 export interface RequestSubscriptionPayload {
-  mutation: MutationType;
-  node?: Request | null;
-  updatedFields?: String[] | null;
-  previousValues?: RequestPreviousValues | null;
+  mutation: MutationType
+  node?: Request | null
+  updatedFields?: Array<String> | null
+  previousValues?: RequestPreviousValues | null
 }
 
 export interface User extends Node {
-  id: ID_Output;
-  createdAt: DateTime;
-  updatedAt: DateTime;
-  firstName?: String | null;
-  lastName?: String | null;
-  email: String;
-  username: String;
-  password: String;
-  role: ROLE;
-  requests?: Request[] | null;
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  firstName?: String | null
+  lastName?: String | null
+  email: String
+  username: String
+  password: String
+  role: ROLE
+  requests?: Array<Request> | null
 }
 
 /*
@@ -1874,9 +1876,9 @@ export interface User extends Node {
 
  */
 export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: Array<UserEdge | null>;
-  aggregate: AggregateUser;
+  pageInfo: PageInfo
+  edges: Array<UserEdge | null>
+  aggregate: AggregateUser
 }
 
 /*
@@ -1884,59 +1886,59 @@ export interface UserConnection {
 
  */
 export interface UserEdge {
-  node: User;
-  cursor: String;
+  node: User
+  cursor: String
 }
 
 export interface UserPreviousValues {
-  id: ID_Output;
-  createdAt: DateTime;
-  updatedAt: DateTime;
-  firstName?: String | null;
-  lastName?: String | null;
-  email: String;
-  username: String;
-  password: String;
-  role: ROLE;
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  firstName?: String | null
+  lastName?: String | null
+  email: String
+  username: String
+  password: String
+  role: ROLE
 }
 
 export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node?: User | null;
-  updatedFields?: String[] | null;
-  previousValues?: UserPreviousValues | null;
+  mutation: MutationType
+  node?: User | null
+  updatedFields?: Array<String> | null
+  previousValues?: UserPreviousValues | null
 }
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
-export type Boolean = boolean;
+export type Boolean = boolean
 
-export type DateTime = Date | string;
+export type DateTime = Date | string
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type ID_Input = string | number
+export type ID_Output = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
-export type Int = number;
+export type Int = number
 
 /*
 Raw JSON value
 */
-export type Json = any;
+export type Json = any
 
 /*
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 */
-export type Long = string;
+export type Long = string
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type String = string;
+export type String = string

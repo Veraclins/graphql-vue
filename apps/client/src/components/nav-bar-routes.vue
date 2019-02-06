@@ -1,11 +1,7 @@
 <script>
-// Allows stubbing BaseLink in unit tests
 const BaseLink = 'BaseLink';
 
 export default {
-  // Functional components are stateless, meaning they can't
-  // have data, computed properties, etc and they have no
-  // `this` context.
   functional: true,
   props: {
     routes: {
@@ -13,17 +9,12 @@ export default {
       required: true,
     },
   },
-  // Render functions are an alternative to templates
   render(h, { props, $style = {} }) {
-    // Functional components are the only components allowed
-    // to return an array of children, rather than a single
-    // root node.
-
-    const normalizedRoutes = props.routes.map(r =>
-      Object.keys(r).reduce(
+    const normalizedRoutes = props.routes.map(route =>
+      Object.keys(route).reduce(
         (acc, key) => ({
           ...acc,
-          [key]: typeof r[key] === 'function' ? r[key]() : r[key],
+          [key]: typeof route[key] === 'function' ? route[key]() : route[key],
         }),
         {}
       )
@@ -36,7 +27,7 @@ export default {
         to={route}
         exact-active-class={$style.active}
       >
-        <a>{route.title}</a>
+        <a class={$style.navItem}>{route.title}</a>
       </BaseLink>
     ));
   },
@@ -45,11 +36,21 @@ export default {
 
 <style lang="scss" module>
 @import '@design';
-
-.active a {
-  font-weight: 600;
-  color: $color-link-text-active;
+.navItem {
+  color: $color-main;
   text-decoration: none;
+
+  @include small {
+    margin: 0 0 20px 0;
+  }
+  &:hover {
+    color: $color-secondary;
+  }
+}
+.active a {
+  padding-bottom: px-rem(5);
+  font-weight: 700;
   cursor: default;
+  border-bottom: 1px solid;
 }
 </style>

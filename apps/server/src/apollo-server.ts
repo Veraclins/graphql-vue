@@ -63,7 +63,7 @@ const createApolloServer = (
           contextData = await context({ req, request: req });
         }
       } catch (err) {
-        logger.error(err);
+        logger.error(err, 'error');
         throw err;
       }
 

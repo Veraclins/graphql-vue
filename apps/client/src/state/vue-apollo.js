@@ -4,6 +4,7 @@ import {
   createApolloClient,
   restartWebsockets,
 } from 'vue-cli-plugin-apollo/graphql-client';
+import { formatNetworkErrors, formatGraphqlErrors } from '@src/services/errors';
 
 // Install the vue plugin
 Vue.use(VueApollo);
@@ -18,7 +19,7 @@ const defaultOptions = {
   // LocalStorage token
   tokenName: 'apollo-token',
   // Enable Automatic Query persisting with Apollo Engine
-  persisting: false,
+  persisting: true,
   // Use websockets for everything (no HTTP)
   // You need to pass a `wsEndpoint` for this to work
   websocketsOnly: false,
@@ -41,13 +42,9 @@ const defaultOptions = {
   // clientState: { resolvers: { ... }, defaults: { ... } }
 };
 
-// Call this in the Vue app file
 export const createProvider = (options = {}) => {
   // Create apollo client
-  const {
-    apolloClient,
-    wsClient
-  } = createApolloClient({
+  const { apolloClient, wsClient } = createApolloClient({
     ...defaultOptions,
     ...options,
   });
@@ -62,6 +59,8 @@ export const createProvider = (options = {}) => {
       },
     },
     errorHandler(error) {
+      console.log(error);
+
       // eslint-disable-next-line no-console
       const err = JSON.parse(JSON.stringify(error));
       // console.log(
@@ -69,7 +68,13 @@ export const createProvider = (options = {}) => {
       //   'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;',
       //   err
       // );
-      return err;
+      const { message } = err;
+      console.log(err);
+      return {
+        message,
+        networkError: formatNetworkErrors(err),
+        graphQLErrors: formatGraphqlErrors(err),
+      };
     },
   });
 
@@ -78,6 +83,7 @@ export const createProvider = (options = {}) => {
 
 // Manually call this when user log in
 export const onLogin = async (apolloClient, token) => {
+  console.log('hmmmmmmmmmm');
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
 };
 

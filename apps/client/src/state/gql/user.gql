@@ -1,99 +1,114 @@
-### Queries
+# ## Queries
 
-query GetSelf {
-  self {
-    ...UserMainFields
-  }
+query GetUserRequests {
+	getUserRequests {
+		...RequestFields
+	}
+}
+query GetRequestById($id: ID!) {
+	getRequestById(id: $id) {
+		...RequestFields
+	}
+}
+query GetAllRequests {
+	getAllRequests {
+		...RequestFields
+		owner {
+			username
+		}
+	}
 }
 
-query GetUser($id: ID!) {
-  user(id: $id) {
-    ...UserMainFields
-  }
+query LocalGetLoggedInUser {
+	user @client {
+		...UserMainFields
+	}
 }
 
-query GetUserContent($id: ID!) {
-  userContent(id: $id) {
-    ...PostFields
-    isPublished
-  }
+query LocalGetRequests {
+	requests @client {
+		...RequestFields
+	}
 }
 
-query GetRecentPosts {
-  feed {
-    ...PostFields
-  }
+# ## Mutations
+
+mutation Login($username: String!, $password: String!) {
+	login(username: $username, password: $password) {
+		user {
+			...UserMainFields
+		}
+		token
+	}
 }
 
-query LocalGetSelf {
-  user @client {
-    ...UserMainFields
-  }
+mutation Signup($email: String!, $password: String!, $username: String!) {
+	signup(email: $email, password: $password, username: $username) {
+		user {
+			...UserMainFields
+		}
+		token
+	}
 }
 
-### Mutations
-
-mutation Authenticate($idToken: String!) {
-  authenticate(idToken: $idToken) {
-    ...UserMainFields
-  }
+mutation CreateRequest(
+$title: String!
+$device: String!
+$description: String!
+) {
+	createRequest(title: $title, device: $device, description: $description) {
+		...RequestFields
+	}
 }
 
-mutation Login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
-    user {
-      ...UserMainFields
-    }
-    token
-  }
+mutation UpdateRequest($title: String, $device: String, $description: String) {
+	updateRequest(title: $title, device: $device, description: $description) {
+		...RequestFields
+	}
 }
 
-mutation Signup($email: String!, $password: String!, $name: String!) {
-  signup(email: $email, password: $password, name: $name) {
-    user {
-      ...UserMainFields
-    }
-    token
-  }
+mutation ApproveRequest($id: ID) {
+	approveRequest(id: $id) {
+		...RequestFields
+	}
 }
 
-mutation CreateDraft($title: String!, $text: String!) {
-  createDraft(title: $title, text: $text) {
-    ...PostFields
-    isPublished
-  }
+mutation DispproveRequest($id: ID) {
+	disapproveRequest(id: $id) {
+		...RequestFields
+	}
 }
 
-mutation PublishPost($id: ID!) {
-  publishPost(id: $id) {
-    ...PostFields
-    isPublished
-  }
+mutation ResolveRequest($id: ID) {
+	resolveRequest(id: $id) {
+		...RequestFields
+	}
 }
 
-mutation UpdatePost($input: PostUpdatedInput!) {
-  updatePost(input: $input) {
-    ...PostFields
-  }
+mutation LocalSetLoggedInUser($user: User!) {
+	setLoggedInUser(user: $user) @client
 }
 
-mutation LocalSetSelf($user: User!) {
-  setSelf(user: $user) @client
+mutation LocalSetRequests($requests: [Request!]!) {
+	setRequests(requests: $requests) @client
 }
 
-### Fragments
 
-fragment PostFields on Post {
-  id
-  title
-  published
-  author {
-    id
-    name
-  }
+# ## Fragments
+
+fragment RequestFields on Request {
+	id
+	title
+	device
+	description
+	status
+	createdAt
+	updatedAt
 }
 
 fragment UserMainFields on User {
-  id
-  email
+	id
+	email
+	username
+	role
 }

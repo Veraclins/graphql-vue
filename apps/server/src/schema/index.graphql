@@ -37,6 +37,7 @@ type User {
 	username: String!
 	firstName: String
 	lastName: String
+	role: ROLE!
 	createdAt: DateTime!
 	requests: [Request]
 }

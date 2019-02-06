@@ -1,6 +1,7 @@
 import { QueryResolvers } from '@generated/resolvers';
 import { TypeMap } from '@resolvers/types/TypeMap';
 
+// tslint:disable-next-line: no-empty-interface
 export interface QueryParent {}
 
 export const Query: QueryResolvers.Type<TypeMap> = {

@@ -4,7 +4,7 @@ import PostList from '@components/post-list';
 import {
   GetUser,
   GetUserContent,
-  LocalGetSelf,
+  LocalGetLoggedInUser,
   CreateDraft,
   PublishPost,
   UpdatePost,
@@ -57,7 +57,7 @@ export default {
     },
   },
   apollo: {
-    user: LocalGetSelf,
+    user: LocalGetLoggedInUser,
     profileOwner: {
       query: GetUser,
       variables() {
@@ -220,7 +220,7 @@ export default {
   box-sizing: content-box;
   width: 80%;
   margin: auto;
-  background: $color-login-form-container;
+  background: $color-main;
 }
 
 .form {

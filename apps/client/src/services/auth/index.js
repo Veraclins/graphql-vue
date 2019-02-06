@@ -1,21 +1,8 @@
 import jwtDecode from 'jwt-decode';
 
-import {
-  Login,
-  Signup,
-  LocalSetSelf
-} from '@gql/user';
-import {
-  apolloClient,
-  apolloOnLogin,
-  apolloOnLogout
-} from '@state';
-import {
-  setSession,
-  clearSession
-} from './session';
-
-let renewAuthTimeout;
+import { Login, Signup, LocalSetLoggedInUser } from '@gql/user';
+import { apolloClient, apolloOnLogin, apolloOnLogout } from '@state';
+import { setSession, clearSession } from '@services/auth/session';
 
 /**
  * @description Shut down session
@@ -23,20 +10,21 @@ let renewAuthTimeout;
 const clearAuth = () => {
   clearSession();
   apolloOnLogout();
-
-  clearTimeout(renewAuthTimeout);
 };
 
 /**
  * @description Save authentication data in localStorage
  */
-export const setAuth = auth => {
-  auth && setSession(auth);
+export const setAuth = async (user, token) => {
+  await setCurrentUser(user);
+  const tokenInfo = jwtDecode(token);
+  tokenInfo.token = token;
+  setSession(tokenInfo);
   apolloOnLogin();
 };
 
 /**
- * @description Send login attempt to the API with the provided credentials
+ * @description Send login mutation to the API with the provided credentials
  * @param {String} username User's username or email
  * @param {String} password User's password
  */
@@ -44,24 +32,16 @@ export const login = async (username, password) => {
   try {
     const {
       data: {
-        login: {
-          user,
-          token
-        },
+        login: { user, token },
       },
     } = await apolloClient.mutate({
       mutation: Login,
       variables: {
-        email: username,
+        username,
         password,
       },
     });
-
-    await setCurrentUser(user);
-    const tokenInfo = jwtDecode(token);
-    tokenInfo.token = token;
-    setSession(tokenInfo);
-
+    setAuth(user, token);
     return true;
   } catch (err) {
     throw err;
@@ -69,36 +49,29 @@ export const login = async (username, password) => {
 };
 
 /**
- * @description Send signup attempt to the API with the provided credentials
+ * @description Send signup mutation to the API with the provided credentials
  * @param {String} email User's username or email
  * @param {String} username User's username or email
  * @param {String} password User's password
  */
-export const signup = async (username, password, name) => {
+export const signup = async (email, password, username) => {
   try {
     const {
       data: {
-        signup: {
-          user,
-          token
-        },
+        signup: { user, token },
       },
     } = await apolloClient.mutate({
       mutation: Signup,
       variables: {
-        email: username,
-        password: password,
-        name: name,
+        email,
+        password,
+        username,
       },
     });
-
-    await setCurrentUser(user);
-    const tokenInfo = jwtDecode(token);
-    setSession(tokenInfo);
-
+    setAuth(user, token);
     return true;
   } catch (err) {
-    console.error(JSON.stringify(err));
+    throw err;
   }
 };
 
@@ -117,7 +90,7 @@ export const logout = () => {
  */
 export const setCurrentUser = user => {
   return apolloClient.mutate({
-    mutation: LocalSetSelf,
+    mutation: LocalSetLoggedInUser,
     variables: {
       user,
     },
