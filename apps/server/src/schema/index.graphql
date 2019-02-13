@@ -9,7 +9,7 @@ type Query {
 type Mutation {
 	# Authentication
 	login(username: String!, password: String!): AuthPayload!
-	signup(email: String!, password: String!, username: String!): AuthPayload!
+	signup(email: String!, password: String!, confirmPassword: String!, username: String!): AuthPayload!
 	# Profile
 	updateProfile(id: ID!, firstName: String!, lastName: String!): User!
 	# Requests

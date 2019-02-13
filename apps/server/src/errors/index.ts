@@ -15,7 +15,6 @@ export const formatError = (error: Error) => {
   // This can be used to send errors to third
   // party services like Sentry or Stackdriver
   logger.error(error);
-
   return error;
 };
 
@@ -33,6 +32,16 @@ export class NotFoundError extends ApolloError {
   // tslint:disable-next-line: no-identical-functions
   constructor(message: string) {
     super(message, 'RESOURCE_NOT_FOUND');
+
+    Object.defineProperty(this, 'name', { value: this.constructor.name });
+  }
+}
+
+// tslint:disable-next-line: max-classes-per-file
+export class ConflictError extends ApolloError {
+  // tslint:disable-next-line: no-identical-functions
+  constructor(message: string) {
+    super(message, 'RESOURCE_CONFLICT');
 
     Object.defineProperty(this, 'name', { value: this.constructor.name });
   }

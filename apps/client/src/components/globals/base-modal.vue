@@ -33,9 +33,6 @@ export default {
         <section :class="$style.modalBody">
           <slot> </slot>
         </section>
-        <footer :class="$style.modalFooter">
-          <slot name="footer" />
-        </footer>
       </div>
     </div>
   </transition>
@@ -60,10 +57,10 @@ export default {
   /* z-index: $layer-modal-z-index; */
   display: flex;
   flex-direction: column;
-  width: px-rem(650);
+  width: px-rem(500);
   max-width: 90%;
   max-height: 95%;
-  padding: 20px;
+  padding: 10px 10px 10px;
   background: $color-main;
   border-radius: 10px;
   animation: fadein 0.5s linear;
@@ -91,25 +88,10 @@ export default {
   }
 }
 
-.modalHeader,
-.modalFooter {
-  display: flex;
-  flex: 2;
-  align-items: center;
-  color: $color-primary;
-}
-
 .modalHeader {
-  justify-content: space-between;
-  padding-bottom: 20px;
-  border-bottom: 1px solid lighten($color: $color-main-bg, $amount: 50);
-  border-radius: 5px;
-}
-
-.modalFooter {
-  padding-top: 20px;
-  border-top: 1px solid lighten($color: $color-main-bg, $amount: 50);
-  border-radius: 5px;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 8px;
 }
 
 .modalBody {

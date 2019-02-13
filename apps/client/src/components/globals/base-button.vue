@@ -20,5 +20,8 @@
     cursor: not-allowed;
     background: $color-button-disabled-bg;
   }
+  &:hover {
+    background: darken($color-button-bg, 15%);
+  }
 }
 </style>

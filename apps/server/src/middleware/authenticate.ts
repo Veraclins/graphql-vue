@@ -1,7 +1,8 @@
+import { GraphQLResolveInfo } from 'graphql';
+
 import { AuthenticationError } from '@errors';
 import { Context } from '@utils/interfaces';
 import { verifyToken } from '@utils/jwt';
-import { GraphQLResolveInfo } from 'graphql';
 
 export default async (
   resolve: Function,

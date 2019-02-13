@@ -14,14 +14,13 @@ $color-text: black;
 $color-link-text: $color-secondary;
 
 // INPUTS
-$color-input-fill: lighten($color-secondary, 50%);
-$color-input-border: lighten($color-primary, 50%);
+$color-input-border: lighten($color-primary, 30%);
 
 // BUTTONS
-$color-button-bg: $color-secondary;
-$color-outline-button-bg: $color-primary;
+$color-button-bg: $color-primary;
+$color-outline-button-bg: $color-secondary;
 $color-outline-button-border: $color-secondary;
-$color-button-disabled-bg: darken(desaturate($color-button-bg, 20%), 10%);
+$color-button-disabled-bg: darken(desaturate($color-button-bg, 30%), 30%);
 $color-outline-button-disabled-bg: darken(desaturate($color-outline-button-bg, 20%), 10%);
 $color-outline-button-disabled-border: darken(desaturate($color-outline-button-border, 20%), 10%);
 $color-button-text: $color-main;

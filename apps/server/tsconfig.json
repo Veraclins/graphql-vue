@@ -40,6 +40,8 @@
        "@services/*": ["src/services/*"],
        "@utils": ["src/utils/index.ts"],
        "@utils/*": ["src/utils/*"],
+       "@validations": ["src/validations/index.ts"],
+       "@validations/*": ["src/validations/*"],
        "@root": ["src/index.ts"],
        "@root/*": ["src/*"],
      },

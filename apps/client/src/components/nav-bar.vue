@@ -1,13 +1,13 @@
 <script>
 import NavBarRoutes from './nav-bar-routes.vue';
-import { LocalGetLoggedInUser } from '@gql/user';
+import { getSession } from '@src/services/auth/session';
 import { logout } from '@services/auth';
 
 export default {
   components: { NavBarRoutes },
   data() {
     return {
-      user: {},
+      user: null,
       menuActive: false,
       loggedInNavRoutes: [
         {
@@ -27,6 +27,9 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.user = getSession();
+  },
   methods: {
     toggleMenu() {
       this.menuActive = !this.menuActive;
@@ -36,13 +39,11 @@ export default {
     },
     logOut() {
       logout();
+      this.user = null;
     },
-    async showModal(id) {
-      this.$root.$emit('show-modal', { id });
+    async showModal(modal) {
+      this.$root.$emit('show-modal', modal);
     },
-  },
-  apollo: {
-    user: LocalGetLoggedInUser,
   },
 };
 </script>
@@ -77,8 +78,9 @@ export default {
         :routes="adminNavRoutes"
       />
       <template v-if="user">
+        {{ user.username }}
         <NavBarRoutes :routes="loggedInNavRoutes" />
-        <NavButton @click="showModal('request')">
+        <NavButton @click="showModal({ type: 'form', id: 'request' })">
           Create Request
         </NavButton>
         <NavButton @click="logOut">
@@ -86,10 +88,10 @@ export default {
         </NavButton>
       </template>
       <template v-else>
-        <NavButton @click="showModal('login')">
+        <NavButton @click="showModal({ type: 'form', id: 'login' })">
           Login
         </NavButton>
-        <NavButton @click="showModal('signup')">
+        <NavButton @click="showModal({ type: 'form', id: 'signup' })">
           Register
         </NavButton>
       </template>

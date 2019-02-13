@@ -1,44 +1,51 @@
-import { isValidSession } from '@services/auth/session';
+// import { isValidSession } from '@services/auth/session';
 
 export default [
   {
     path: '/',
     name: 'home',
     component: () => lazyLoadView(import('@views/home')),
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => lazyLoadView(import('@views/login')),
-    beforeEnter: async (routeTo, routeFrom, next) => {
-      const loggedIn = await isValidSession();
-
-      // Redirect to home page if the user is
-      // logged in or continue otherwise
-      loggedIn
-        ? next({
-            name: 'home',
-          })
-        : next();
+    props: true,
+    meta: {
+      onlyGuest: true,
     },
   },
   {
-    path: '/dashboard/',
+    path: '/dashboard',
     name: 'dashboard',
-    component: () => lazyLoadView(import('@views/404')),
+    component: () => lazyLoadView(import('@views/dashboard')),
     props: true,
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: '/requests',
     name: 'requests',
-    component: () => lazyLoadView(import('@views/profile')),
+    component: () => lazyLoadView(import('@views/requests')),
     props: true,
+    meta: {
+      authRequired: true,
+    },
+  },
+  {
+    path: '/requests/:id',
+    name: 'single-request',
+    component: () => lazyLoadView(import('@views/requests')),
+    props: true,
+    meta: {
+      authRequired: true,
+    },
   },
   {
     path: '/admin',
     name: 'admin',
     component: () => lazyLoadView(import('@views/loading')),
     props: true,
+    meta: {
+      authRequired: true,
+      adminOnly: true,
+    },
   },
   {
     path: '/loading',
@@ -49,33 +56,14 @@ export default [
     path: '/404',
     name: '404',
     component: require('@views/404').default,
-    // Allows props to be passed to the 404 page through route
-    // params, such as `resource` to define what wasn't found.
     props: true,
   },
-  // Redirect any unmatched routes to the 404 page. This may
-  // require some server configuration to work in production:
-  // https://router.vuejs.org/en/essentials/history-mode.html#example-server-configurations
   {
     path: '*',
     redirect: '404',
   },
 ];
 
-// Lazy-loads view components, but with better UX. A loading view
-// will be used if the component takes a while to load, falling
-// back to a timeout view in case the page fails to load. You can
-// use this component to lazy-load a route with:
-//
-// component: () => lazyLoadView(import('@views/my-view'))
-//
-// NOTE: Components loaded with this strategy DO NOT have access
-// to in-component guards, such as beforeRouteEnter,
-// beforeRouteUpdate, and beforeRouteLeave. You must either use
-// route-level guards instead or lazy-load the component directly:
-//
-// component: () => import('@views/my-view')
-//
 function lazyLoadView(AsyncView) {
   const AsyncHandler = () => ({
     component: AsyncView,

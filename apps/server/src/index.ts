@@ -7,7 +7,12 @@ dotenv.config();
 
 import { formatError } from '@errors';
 import { prisma } from '@generated/prisma-client';
-import { isAdmin, isAuthenticated } from '@middleware';
+import {
+  isAdmin,
+  isAuthenticated,
+  isValidLogin,
+  isValidSignup,
+} from '@middleware';
 import { resolvers } from '@resolvers';
 import createApolloServer from '@root/apollo-server';
 import pubsub from '@root/pubsub';
@@ -20,10 +25,12 @@ const app = express();
 
 app.post(GRAPHQL_ENDPOINT);
 
+const middlewares = [isValidSignup, isValidLogin, isAuthenticated, isAdmin];
+
 const server = createApolloServer(app, {
   graphqlEndpoint: GRAPHQL_ENDPOINT,
   subscriptionsEndpoint: GRAPHQL_SUBSCRIPTIONS,
-  graphqlMiddlewares: [isAuthenticated, isAdmin],
+  graphqlMiddlewares: middlewares,
   apolloServerOptions: { formatError },
   typeDefs: importSchema('src/schema/index.graphql'),
   resolvers,

@@ -1,4 +1,4 @@
-import { AuthenticationError, NotFoundError } from '@errors';
+import { AuthenticationError, ConflictError, NotFoundError } from '@errors';
 import { MutationResolvers } from '@generated/resolvers';
 import { TypeMap } from '@resolvers/types/TypeMap';
 import { getAuthPayload, setRequestStatus } from '@utils';
@@ -15,25 +15,30 @@ export const Mutation: MutationResolvers.Type<TypeMap> = {
     const user = isEmail
       ? await context.prisma.user({ email: username })
       : await context.prisma.user({ username });
-
-    if (!user)
-      throw new AuthenticationError(
-        `We can't find an account with the ${
-          isEmail ? 'email' : 'username'
-        }: ${username}`
-      );
+    const message = `We can't find ${
+      isEmail ? 'an email' : 'a username'
+    }: ${username} with the given password`;
+    if (!user) throw new AuthenticationError(message);
 
     const valid = await compare(password, user.password);
-    if (!valid)
-      throw new AuthenticationError(
-        "Sorry, that password isn't right. Please try again"
-      );
+    if (!valid) throw new AuthenticationError(message);
     return getAuthPayload(user);
   },
 
   signup: async (parent, args, context) => {
+    const exists = await context.prisma.$exists.user({
+      OR: [{ email: args.email }, { username: args.username }],
+    });
+
+    // @ts-ignore
+    const { confirmPassword, ...others } = args;
+
+    if (exists)
+      throw new ConflictError(
+        'A user with email or username already exists. Do you want to login?'
+      );
     const password = await hash(args.password);
-    const user = await context.prisma.createUser({ ...args, password });
+    const user = await context.prisma.createUser({ ...others, password });
     return getAuthPayload(user);
   },
 

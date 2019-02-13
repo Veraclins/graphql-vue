@@ -63,20 +63,6 @@ export default {
       this.inProgress = false;
     },
 
-    // async resetPassword() {
-    //   this.clearErrors();
-    //   this.inProgressForgetPassword = true;
-
-    //   // This redirects to home page
-    //   try {
-    //     await passwordReset(this.resetEmail);
-    //     this.isSuccessForgetPassword = true;
-    //   } catch (err) {
-    //     this.setError(err);
-    //   }
-    //   this.inProgressForgetPassword = false;
-    // },
-
     showSignUpForm() {
       this.formProperties = {
         title: 'Create a new account',

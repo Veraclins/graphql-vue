@@ -4,7 +4,9 @@ import VueRouter from 'vue-router';
 import VueMeta from 'vue-meta';
 // Adds a loading bar at the top during page loads.
 import NProgress from 'nprogress/nprogress';
+
 import routes from './routes';
+import { isValidSession, getSession } from '@src/services/auth/session';
 
 Vue.use(VueRouter);
 Vue.use(VueMeta, {
@@ -45,6 +47,36 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
   // just continue and don't wait for user object.
   if (!routeTo.matched.some(route => route.meta.authRequired)) return next();
 
+  if (routeTo.matched.some(route => route.meta.authRequired)) {
+    if (!isValidSession()) {
+      return next({
+        path: '/',
+        params: {
+          nextUrl: routeTo.fullPath,
+          action: 'login',
+        },
+      });
+    }
+  }
+
+  if (routeTo.matched.some(route => route.meta.adminOnly)) {
+    if (isValidSession()) {
+      const user = getSession();
+      if (!user || user.role !== 'ADMIN') {
+        return next({
+          path: '/dashboard',
+        });
+      }
+      return next();
+    }
+    return next({
+      path: '/',
+      params: {
+        nextUrl: routeTo.fullPath,
+        action: 'login',
+      },
+    });
+  }
   next();
 });
 

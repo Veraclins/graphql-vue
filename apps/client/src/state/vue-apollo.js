@@ -1,14 +1,16 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
+import { persistCache } from 'apollo-cache-persist';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import {
   createApolloClient,
   restartWebsockets,
 } from 'vue-cli-plugin-apollo/graphql-client';
-import { formatNetworkErrors, formatGraphqlErrors } from '@src/services/errors';
+import router from '@src/router';
 
 // Install the vue plugin
 Vue.use(VueApollo);
-
+const cache = new InMemoryCache();
 // Config
 const defaultOptions = {
   // You can use `https` for secure connection (recommended in production)
@@ -30,7 +32,7 @@ const defaultOptions = {
   // link: myLink
 
   // Override default cache
-  // cache: myCache
+  cache,
 
   // Override the way the Authorization header is set
   // getAuth: (tokenName) => ...
@@ -41,7 +43,10 @@ const defaultOptions = {
   // Client local data (see apollo-link-state)
   // clientState: { resolvers: { ... }, defaults: { ... } }
 };
-
+persistCache({
+  cache,
+  storage: window.localStorage,
+});
 export const createProvider = (options = {}) => {
   // Create apollo client
   const { apolloClient, wsClient } = createApolloClient({
@@ -63,18 +68,12 @@ export const createProvider = (options = {}) => {
 
       // eslint-disable-next-line no-console
       const err = JSON.parse(JSON.stringify(error));
-      // console.log(
-      //   '%cError',
-      //   'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;',
-      //   err
-      // );
-      const { message } = err;
-      console.log(err);
-      return {
-        message,
-        networkError: formatNetworkErrors(err),
-        graphQLErrors: formatGraphqlErrors(err),
-      };
+      console.log(
+        '%cError',
+        'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;',
+        err
+      );
+      return err;
     },
   });
 
@@ -83,7 +82,7 @@ export const createProvider = (options = {}) => {
 
 // Manually call this when user log in
 export const onLogin = async (apolloClient, token) => {
-  console.log('hmmmmmmmmmm');
+  router.push('/dashboard');
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
 };
 

@@ -42,8 +42,8 @@ mutation Login($username: String!, $password: String!) {
 	}
 }
 
-mutation Signup($email: String!, $password: String!, $username: String!) {
-	signup(email: $email, password: $password, username: $username) {
+mutation Signup($email: String!, $password: String!, $confirmPassword: String!, $username: String!) {
+	signup(email: $email, password: $password, confirmPassword: $confirmPassword, username: $username) {
 		user {
 			...UserMainFields
 		}

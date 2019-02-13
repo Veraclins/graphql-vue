@@ -14,8 +14,8 @@
   margin-left: $size-grid-padding;
   color: $color-button-text;
   cursor: pointer;
-  background: $color-outline-button-bg;
   border: 1px solid $color-outline-button-border;
+  border-radius: 4px;
   &:hover {
     color: $color-text;
     background: $color-button-bg;

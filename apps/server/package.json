@@ -14,6 +14,7 @@
   "dependencies": {
     "apollo-server-express": "2.3.x",
     "bcryptjs": "^2.4.3",
+    "class-validator": "^0.9.1",
     "dotenv": "^6.2.0",
     "esm": "3.0.x",
     "express": "4.16.x",

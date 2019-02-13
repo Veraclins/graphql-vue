@@ -5,6 +5,12 @@
     "body": ["<BaseButton>", "\t${3}", "</BaseButton>"],
     "description": "<BaseButton>"
   },
+  "BaseModal": {
+    "scope": "vue-html",
+    "prefix": "BaseModal",
+    "body": ["<BaseModal>", "\t${3}", "</BaseModal>"],
+    "description": "<BaseModal>"
+  },
   "BaseIcon": {
     "scope": "vue-html",
     "prefix": "BaseIcon",

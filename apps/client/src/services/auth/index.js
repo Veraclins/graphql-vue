@@ -54,7 +54,7 @@ export const login = async (username, password) => {
  * @param {String} username User's username or email
  * @param {String} password User's password
  */
-export const signup = async (email, password, username) => {
+export const signup = async (email, password, confirmPassword, username) => {
   try {
     const {
       data: {
@@ -65,6 +65,7 @@ export const signup = async (email, password, username) => {
       variables: {
         email,
         password,
+        confirmPassword,
         username,
       },
     });
