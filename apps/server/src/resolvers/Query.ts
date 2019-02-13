@@ -1,29 +1,16 @@
-import { getUserId, Context } from '../utils'
+import { QueryResolvers } from '@generated/resolvers';
+import { TypeMap } from '@resolvers/types/TypeMap';
 
-export const Query = {
-  feed(parent, args, ctx: Context) {
-    return ctx.prisma.posts({ where: { published: true } })
+// tslint:disable-next-line: no-empty-interface
+export interface QueryParent {}
+
+export const Query: QueryResolvers.Type<TypeMap> = {
+  getAllRequests: (parent, args, context) => context.prisma.requests(),
+
+  getRequestById: (parent, args, context) =>
+    context.prisma.request({ id: args.id }),
+  getUserRequests: (parent, args, context) => {
+    const { id } = context.user;
+    return context.prisma.user({ id }).requests();
   },
-
-  drafts(parent, args, ctx: Context) {
-    const id = getUserId(ctx)
-
-    const where = {
-      published: false,
-      author: {
-        id,
-      },
-    }
-
-    return ctx.prisma.posts({ where })
-  },
-
-  post(parent, { id }, ctx: Context) {
-    return ctx.prisma.post({ id })
-  },
-
-  me(parent, args, ctx: Context) {
-    const id = getUserId(ctx)
-    return ctx.prisma.user({ id })
-  },
-}
+};

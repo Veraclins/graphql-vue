@@ -4,7 +4,8 @@
   "description": "A maintenance tracker application built with graphql and Vue js",
   "main": "apps/server/index.js",
   "scripts": {
-    "test": "lerna run test --stream"
+    "test": "lerna run test --stream",
+    "dev": "lerna run dev --parallel"
   },
   "repository": {
     "type": "git",

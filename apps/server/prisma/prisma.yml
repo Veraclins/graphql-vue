@@ -1,24 +1,26 @@
-# Specifies the HTTP endpoint of your Prisma API (deployed to a Prisma Demo server).
-endpoint: https://eu1.prisma.sh/public-cosmicseed-431/server/dev
+# REQUIRED
+endpoint: ${env:PRISMA_ENDPOINT}
 
-# Defines your models, each model is mapped to the database as a table.
+# REQUIRED
+# Points to the files containing your data model.
 datamodel: datamodel.prisma
 
-# Specifies the language and directory for the generated Prisma client.
+# The secret is used to generate JTWs which allow to authenticate
+# against your Prisma service. You can use the `prisma token` command from the CLI
+# to generate a JWT based on the secret. When using the `prisma-binding` package,
+# you don't need to generate the JWTs manually as the library is doing that for you
+# (this is why you're passing it to the `Prisma` constructor).
+# OPTIONAL
+# Defines how to seed data to the database upon the initial deploy.
+seed:
+  import: seed.graphql
+
 generate:
   - generator: typescript-client
     output: ../src/generated/prisma-client
 
-# Seed your service with initial data based on `seed.graphql`.
-seed:
-  import: seed.graphql
-
-# Ensures Prisma client is re-generated after a datamodel change.
 hooks:
   post-deploy:
+    - graphql get-schema -p prisma
+    - graphql codegen
     - prisma generate
-
-# If specified, the `secret` must be used to generate a JWT which is attached
-# to the `Authorization` header of HTTP requests made against the Prisma API.
-# Info: https://www.prisma.io/docs/reference/prisma-api/concepts-utee3eiquo#authentication
-# secret: ${env:PRISMA_SECRET}

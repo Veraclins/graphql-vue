@@ -1,0 +1,114 @@
+# ## Queries
+
+query GetUserRequests {
+	getUserRequests {
+		...RequestFields
+	}
+}
+query GetRequestById($id: ID!) {
+	getRequestById(id: $id) {
+		...RequestFields
+	}
+}
+query GetAllRequests {
+	getAllRequests {
+		...RequestFields
+		owner {
+			username
+		}
+	}
+}
+
+query LocalGetLoggedInUser {
+	user @client {
+		...UserMainFields
+	}
+}
+
+query LocalGetRequests {
+	requests @client {
+		...RequestFields
+	}
+}
+
+# ## Mutations
+
+mutation Login($username: String!, $password: String!) {
+	login(username: $username, password: $password) {
+		user {
+			...UserMainFields
+		}
+		token
+	}
+}
+
+mutation Signup($email: String!, $password: String!, $confirmPassword: String!, $username: String!) {
+	signup(email: $email, password: $password, confirmPassword: $confirmPassword, username: $username) {
+		user {
+			...UserMainFields
+		}
+		token
+	}
+}
+
+mutation CreateRequest(
+$title: String!
+$device: String!
+$description: String!
+) {
+	createRequest(title: $title, device: $device, description: $description) {
+		...RequestFields
+	}
+}
+
+mutation UpdateRequest($title: String, $device: String, $description: String) {
+	updateRequest(title: $title, device: $device, description: $description) {
+		...RequestFields
+	}
+}
+
+mutation ApproveRequest($id: ID) {
+	approveRequest(id: $id) {
+		...RequestFields
+	}
+}
+
+mutation DispproveRequest($id: ID) {
+	disapproveRequest(id: $id) {
+		...RequestFields
+	}
+}
+
+mutation ResolveRequest($id: ID) {
+	resolveRequest(id: $id) {
+		...RequestFields
+	}
+}
+
+mutation LocalSetLoggedInUser($user: User!) {
+	setLoggedInUser(user: $user) @client
+}
+
+mutation LocalSetRequests($requests: [Request!]!) {
+	setRequests(requests: $requests) @client
+}
+
+
+# ## Fragments
+
+fragment RequestFields on Request {
+	id
+	title
+	device
+	description
+	status
+	createdAt
+	updatedAt
+}
+
+fragment UserMainFields on User {
+	id
+	email
+	username
+	role
+}

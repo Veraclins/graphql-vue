@@ -9,6 +9,8 @@ With a very intuitive [frontend](https://veratech.herokuapp.com) and a robust `G
 
 To use the app, register an account on the [frontend](https://veratech.herokuapp.com) and create a request.
 
+This project is scaffolded using [typescript-advanced-boilerplate](https://github.com/graphql-boilerplates/typescript-graphql-server/tree/master/advanced) maintained by the GraphQL community, with official support from the Apollo & Prisma teams and an adaptation of the [vue-graphql-enterprise-boilerplate](https://github.com/frandiox/vue-graphql-enterprise-boilerplate) by Fran Dios. Credit to all the awesome contributors to these projects.
+
 ## Features
 
 the app has the following features:

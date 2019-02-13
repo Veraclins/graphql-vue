@@ -1,17 +1,16 @@
-import { Query } from './Query'
-import { Subscription } from './Subscription'
-import { auth } from './Mutation/auth'
-import { post } from './Mutation/post'
-import { User } from './User'
-import { Post } from './Post'
+import { IResolvers } from '@generated/resolvers';
+import { TypeMap } from '@resolvers/types/TypeMap';
 
-export default {
+import { AuthPayload } from '@resolvers/AuthPayload';
+import { Mutation } from '@resolvers/Mutation';
+import { Query } from '@resolvers/Query';
+import { Request } from '@resolvers/Request';
+import { User } from '@resolvers/User';
+
+export const resolvers: IResolvers<TypeMap> = {
   Query,
-  Mutation: {
-    ...auth,
-    ...post,
-  },
-  Subscription,
+  Mutation,
+  AuthPayload,
   User,
-  Post,
-}
+  Request,
+};
