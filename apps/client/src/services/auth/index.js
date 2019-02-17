@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 import { Login, Signup, LocalSetLoggedInUser } from '@gql/user';
 import { apolloClient, apolloOnLogin, apolloOnLogout } from '@state';
 import { setSession, clearSession } from '@services/auth/session';
+import router from '@src/router';
 
 /**
  * @description Shut down session
@@ -82,6 +83,7 @@ export const signup = async (email, password, confirmPassword, username) => {
 export const logout = () => {
   clearAuth();
   setCurrentUser(null);
+  router.push('/');
 };
 
 /**

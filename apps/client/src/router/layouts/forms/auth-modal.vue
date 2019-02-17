@@ -1,6 +1,7 @@
 <script>
 import { login, signup } from '@services/auth';
 import { formatErrors } from '@services/errors';
+import showToaster from '@utils/show-toaster';
 import BaseForm from '@layouts/forms/base-form';
 export default {
   components: { BaseForm },
@@ -12,13 +13,10 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      resetEmail: '',
       usernamePlaceHolder: '',
       errors: {},
       validationErrors: {},
-      isSuccess: false,
       isSignUp: false,
-      inProgress: false,
       formProperties: {},
     };
   },
@@ -27,9 +25,7 @@ export default {
   },
   mounted() {
     this.$root.$on('show-modal', modal => {
-      if (modal.id === 'signup') this.showSignUpForm();
-      if (modal.id === 'login') this.showLogInForm();
-      this.showModal = modal.id === 'login' || modal.id === 'signup';
+      this.openModal(modal);
     });
     this.$root.$on('close-modal', () => {
       this.closeModal();
@@ -40,27 +36,30 @@ export default {
       this.showModal = false;
       this.modalId = '';
     },
+    openModal(modal) {
+      if (modal.id === 'signup') this.showSignUpForm();
+      if (modal.id === 'login') this.showLogInForm();
+      this.showModal = modal.id === 'login' || modal.id === 'signup';
+    },
     // Try to log the user in with the username
     // and password they provided.
     async logIn() {
       this.clearErrors();
-      this.inProgress = true;
+      this.formProperties.inProgress = true;
 
       try {
         await login(this.username, this.password);
-        this.isSuccess = true;
+        this.formProperties.inProgress = false;
         this.closeModal();
       } catch (err) {
         this.setError(err);
       }
-
-      this.inProgress = false;
     },
     // Try to create a new account for the user
     // with the username and password they provided.
     async signUp() {
       this.clearErrors();
-      this.inProgress = true;
+      this.formProperties.inProgress = true;
       try {
         await signup(
           this.email,
@@ -68,13 +67,11 @@ export default {
           this.confirmPassword,
           this.username
         );
-        this.isSuccess = true;
+        this.formProperties.inProgress = false;
         this.closeModal();
       } catch (err) {
         this.setError(err);
       }
-
-      this.inProgress = false;
     },
 
     showSignUpForm() {
@@ -85,11 +82,12 @@ export default {
         rightLinkText: 'Already have an account?',
         rightAction: this.showLogInForm,
         action: this.signUp,
+        inProgress: false,
       };
       this.isSignUp = true;
       this.usernamePlaceHolder = 'Username';
       this.clearErrors();
-      this.clearContent();
+      setTimeout(() => this.clearContent(), 310);
     },
 
     showLogInForm() {
@@ -99,6 +97,7 @@ export default {
         rightLinkText: 'Create an account',
         rightAction: this.showSignUpForm,
         action: this.logIn,
+        inProgress: false,
       };
       this.clearErrors();
       this.isSignUp = false;
@@ -116,24 +115,17 @@ export default {
       this.username = '';
       this.email = '';
       this.password = '';
-      this.resetEmail = '';
+      this.confirmPassword = '';
     },
 
     async setError(err) {
-      this.isSuccess = false;
+      this.formProperties.inProgress = false;
       const errors = formatErrors(err);
       if (errors.code === 'BAD_USER_INPUT') {
         this.validationErrors = errors.errors;
       }
-      if (
-        errors.code === 'RESOURCE_CONFLICT' ||
-        errors.code === 'UNAUTHENTICATED'
-      ) {
-        this.validationErrors = {
-          username: [errors.message],
-        };
-      }
       this.errors = errors;
+      showToaster(this.$root, errors.message, 'error');
     },
   },
 };
@@ -143,29 +135,20 @@ export default {
   <BaseForm v-show="showModal" :properties="formProperties">
     <template #form-header>
       <p :class="$style.formTitle">{{ formProperties.title }}</p>
-      <div
-        v-if="isSuccess"
-        :class="[$style.messageContainer, $style.successContainer]"
-      >
-        <div :class="$style.textKeepNewLine">
-          <span v-if="isSignUp">Sign Up Successfull! </span>
-          <span v-else>Login Successfull! </span>
-        </div>
-      </div>
     </template>
     <template #form-inputs>
+      <BaseInput
+        v-model="username"
+        :errors="validationErrors.username"
+        name="username"
+        :placeholder="usernamePlaceHolder"
+      />
       <BaseInput
         v-if="isSignUp"
         v-model="email"
         :errors="validationErrors.email"
         name="email"
         placeholder="Email"
-      />
-      <BaseInput
-        v-model="username"
-        :errors="validationErrors.username"
-        name="username"
-        :placeholder="usernamePlaceHolder"
       />
       <BaseInput
         v-model="password"
@@ -195,12 +178,6 @@ export default {
 
 <style lang="scss" module>
 @import '@design';
-
-.largeButton {
-  width: 100%;
-  border-radius: $size-button-border-radius;
-}
-
 .clickable {
   padding-top: 10px;
   color: $color-primary;
@@ -215,61 +192,6 @@ export default {
   margin: auto;
   font-size: 20px;
   color: $color-primary;
-  text-align: center;
-}
-
-.formFooter {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  font-size: 13px;
-}
-
-.formContainer {
-  width: 100%;
-  padding: 10px 30px 20px;
-  margin: auto;
-  background: $color-main;
-}
-
-.pullLeft {
-  float: left;
-}
-
-.pullRight {
-  float: right;
-}
-
-.messageContainer {
-  padding: 2px 5px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: $color-main;
-  text-align: left;
-  border-radius: 5px;
-}
-
-.errorContainer {
-  background: $color-error;
-}
-
-.successContainer {
-  background: $color-success;
-}
-
-.successMessage {
-  color: $color-main;
-}
-
-.textKeepNewLine {
-  white-space: pre-line;
-}
-
-.inlineIcon {
-  margin-right: 10px;
-}
-
-.form {
   text-align: center;
 }
 </style>

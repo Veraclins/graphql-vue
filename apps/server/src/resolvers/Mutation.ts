@@ -17,7 +17,7 @@ export const Mutation: MutationResolvers.Type<TypeMap> = {
       : await context.prisma.user({ username });
     const message = `We can't find ${
       isEmail ? 'an email' : 'a username'
-    }: ${username} with the given password`;
+    }: ${username} with the supplied password. Please try again`;
     if (!user) throw new AuthenticationError(message);
 
     const valid = await compare(password, user.password);

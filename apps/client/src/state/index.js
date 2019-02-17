@@ -1,9 +1,9 @@
 import { createProvider, onLogin, onLogout } from '@state/vue-apollo';
 import { defaults, resolvers } from '@state/local';
-import { USER_ID } from '@services/auth/session';
+import { ACCESS_TOKEN } from '@services/auth/session';
 
 export const apolloProvider = createProvider({
-  tokenName: USER_ID,
+  tokenName: ACCESS_TOKEN,
   clientState: {
     defaults,
     resolvers,

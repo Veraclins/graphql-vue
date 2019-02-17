@@ -1,15 +1,15 @@
 <script>
 export default {
   props: {
-    type: {
-      type: String,
-      default: 'text',
+    rows: {
+      type: Number,
+      default: 5,
     },
-    placeholder: {
+    name: {
       type: String,
       default: '',
     },
-    name: {
+    placeholder: {
       type: String,
       default: '',
     },
@@ -50,15 +50,19 @@ export default {
 
 <template>
   <div :class="$style.control">
-    <input
+    <textarea
       :name="name"
-      :type="type"
       :value="value"
+      :rows="rows"
       :placeholder="placeholder"
-      :class="[$style.input, { [$style.withError]: inputErrors.length >= 1 }]"
+      :class="[
+        $style.textarea,
+        { [$style.withError]: inputErrors.length >= 1 },
+      ]"
       v-on="listeners"
-    />
-    <section v-show="inputErrors.length >= 1" :class="$style.errorContainer">
+    >
+    </textarea>
+    <section v-show="inputErrors.length >= 1">
       <span
         v-for="(error, index) in inputErrors"
         :key="index"
@@ -74,7 +78,7 @@ export default {
 .control {
   margin-bottom: $size-grid-padding * 1.5;
 }
-.input {
+.textarea {
   @extend %typography-small;
 
   display: block;
@@ -87,9 +91,6 @@ export default {
 
 .withError {
   border-color: $color-error;
-}
-.errorContainer {
-  /* display: flex; */
 }
 .inputError {
   display: block;

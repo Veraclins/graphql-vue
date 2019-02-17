@@ -1,9 +1,10 @@
 <script>
 import NavBar from '@components/nav-bar';
+import Footer from '@components/footer';
 import Modals from '@layouts/modals';
 
 export default {
-  components: { NavBar, Modals },
+  components: { NavBar, Modals, Footer },
 };
 </script>
 
@@ -13,15 +14,16 @@ export default {
     <div class="container" :class="$style.content">
       <slot />
     </div>
+    <Footer />
     <Modals />
+    <PopUp />
   </div>
 </template>
 
 <style lang="scss" module>
 @import '@design';
 .content {
-  font-size: 22px;
-  line-height: 35px;
+  font-size: 16px;
   text-align: justify;
 }
 </style>

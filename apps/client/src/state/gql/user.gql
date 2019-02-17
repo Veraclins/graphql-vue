@@ -73,7 +73,7 @@ mutation ApproveRequest($id: ID) {
 	}
 }
 
-mutation DispproveRequest($id: ID) {
+mutation DisapproveRequest($id: ID) {
 	disapproveRequest(id: $id) {
 		...RequestFields
 	}

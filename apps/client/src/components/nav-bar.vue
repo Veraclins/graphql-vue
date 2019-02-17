@@ -41,7 +41,7 @@ export default {
       logout();
       this.user = null;
     },
-    async showModal(modal) {
+    showModal(modal) {
       this.$root.$emit('show-modal', modal);
     },
   },
@@ -51,14 +51,14 @@ export default {
 <template>
   <header class="container" :class="$style.navbar">
     <div :class="$style.navbarLeft">
-      <RouterLink to="/">
+      <BaseLink name="home">
         <img
           src="@assets/images/veratech.png"
           alt="Logo"
           width="144"
           height="42"
         />
-      </RouterLink>
+      </BaseLink>
       <a
         :class="[$style.menu, { [$style.active]: menuActive }]"
         @click="toggleMenu"
@@ -80,7 +80,7 @@ export default {
       <template v-if="user">
         {{ user.username }}
         <NavBarRoutes :routes="loggedInNavRoutes" />
-        <NavButton @click="showModal({ type: 'form', id: 'request' })">
+        <NavButton @click="showModal({ id: 'create-request' })">
           Create Request
         </NavButton>
         <NavButton @click="logOut">
@@ -88,10 +88,10 @@ export default {
         </NavButton>
       </template>
       <template v-else>
-        <NavButton @click="showModal({ type: 'form', id: 'login' })">
+        <NavButton @click="showModal({ id: 'login' })">
           Login
         </NavButton>
-        <NavButton @click="showModal({ type: 'form', id: 'signup' })">
+        <NavButton @click="showModal({ id: 'signup' })">
           Register
         </NavButton>
       </template>
@@ -107,7 +107,9 @@ export default {
   top: 0;
   right: 0;
   left: 0;
+  z-index: 1;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   list-style-type: none;
   background: $color-primary;
@@ -135,15 +137,19 @@ export default {
       bottom: 0;
       flex-direction: column;
       align-items: center;
-      justify-content: space-around;
+      justify-content: flex-start;
       width: 60%;
       max-width: 300px;
-      height: 300px;
+      max-height: 300px;
       padding: 20px;
       margin: 0;
       overflow: hidden;
       background: #3358df;
       transition: 0.3s ease;
+      li,
+      button {
+        margin-bottom: $size-grid-padding;
+      }
     }
   }
   .show {
@@ -154,7 +160,6 @@ export default {
     display: none;
     width: 25px;
     height: 20px;
-    margin-top: 10px;
 
     @include small {
       display: block;
