@@ -6,10 +6,20 @@ export default {
       closeOut: false,
     };
   },
+  created() {
+    document.addEventListener('keydown', e => {
+      if (!this.closeOut && e.keyCode === 27) {
+        this.close();
+      }
+    });
+  },
   mounted() {
     this.$root.$on('show-modal', () => {
       this.closeOut = false;
     });
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.close());
   },
   methods: {
     close() {
@@ -22,7 +32,10 @@ export default {
 
 <template>
   <transition name="modal-fade">
-    <div :class="[$style.modalBackdrop, { [$style.fadeOut]: closeOut }]">
+    <div
+      :class="[$style.modalBackdrop, { [$style.fadeOut]: closeOut }]"
+      @click.self="close"
+    >
       <div :class="[$style.modal, { [$style.fadeOut]: closeOut }]">
         <header :class="$style.modalHeader">
           <slot name="header" />
@@ -56,6 +69,7 @@ export default {
 }
 
 .modal {
+  z-index: $layer-modal-z-index + 1;
   display: flex;
   flex-direction: column;
   width: px-rem(500);

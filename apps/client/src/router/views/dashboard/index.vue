@@ -104,7 +104,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@design';
-
 .logo {
   max-width: 100%;
   height: auto;

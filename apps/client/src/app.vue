@@ -45,7 +45,9 @@ export default {
 
 body {
   margin-top: 80px;
+  line-height: 2rem;
   color: $color-main;
+  letter-spacing: 0.1rem;
   background: linear-gradient(135deg, #1433c4 0%, #101444 65%, #000564 100%);
 }
 
