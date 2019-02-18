@@ -15,11 +15,8 @@ export default async (
     request: { headers },
   } = context;
   const hasToken = headers['x-access-token'] || headers.authorization;
-
   if (!hasToken)
-    throw new AuthenticationError(
-      'Please provide an authentication header required!'
-    );
+    throw new AuthenticationError('Please provide an authentication header!');
 
   const token =
     headers['x-access-token'] || headers.authorization.replace('Bearer ', '');

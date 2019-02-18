@@ -45,7 +45,6 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
 
   // If auth isn't required for the route (or nested routes),
   // just continue and don't wait for user object.
-  if (!routeTo.matched.some(route => route.meta.authRequired)) return next();
 
   if (routeTo.matched.some(route => route.meta.authRequired)) {
     if (!isValidSession()) {
@@ -77,6 +76,16 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
       },
     });
   }
+
+  if (routeTo.matched.some(route => route.meta.onlyGuests)) {
+    if (isValidSession()) {
+      NProgress.done();
+      return next({
+        path: '/dashboard',
+      });
+    }
+  }
+
   next();
 });
 

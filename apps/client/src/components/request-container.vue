@@ -3,23 +3,17 @@ import formatDate from '@utils/format-date';
 
 export default {
   props: {
-    post: {
+    request: {
       type: Object,
       required: true,
-    },
-    showAuthor: {
-      type: Boolean,
-      default: false,
-    },
-    editable: {
-      type: Boolean,
-      default: false,
     },
   },
   data() {
     return {
-      title: this.post.title,
-      text: this.post.text,
+      title: this.request.title,
+      device: this.request.device,
+      description: this.request.description,
+      status: this.request.status,
     };
   },
   methods: {
@@ -31,120 +25,108 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div :class="$style.postHeader">
-      <input
-        v-model="title"
-        :class="[$style.postTitle, $style.indent]"
-        :disabled="editable == false"
-      />
-      <div :class="$style.indent">
-        <div v-if="showAuthor" :class="$style.authorText">
-          By
-          <BaseLink :params="{ id: post.author.id }" name="user-profile">
-            <a>{{ post.author.name || 'Anonymous' }}</a> </BaseLink
-          >-
-        </div>
-        <div :class="$style.authorText"
-          >Last updated on {{ formatDate(post.updatedAt) }}</div
-        >
-      </div>
-    </div>
-    <div v-if="editable" :class="$style.center">
-      <form>
-        <textarea v-model="text" :class="$style.editArea" />
+  <BaseModal>
+    <div :class="$style.formContainer">
+      <!-- Form header -->
+      <slot name="form-header"> </slot>
+      <form :class="$style.form" @submit.prevent="properties.action">
+        <!-- Form inputs -->
+        <slot name="form-inputs"> </slot>
+        <!-- Submit button -->
         <BaseButton
-          v-if="post.editing"
-          :disabled="post.editing"
-          :class="$style.actionButton"
+          :disabled="inProgress"
+          :class="$style.submitButton"
+          type="submit"
         >
-          <BaseIcon name="sync" spin />
+          <BaseIcon v-if="inProgress" name="sync" spin />
+          <span v-else-if="properties.buttonText">{{
+            properties.buttonText
+          }}</span>
+          <span v-else>Submit</span>
         </BaseButton>
-        <div v-else>
-          <BaseButton
-            :class="$style.actionButton"
-            :disabled="text === post.text && title === post.title"
-            @click.prevent="
-              $emit('save-post', Object.assign({}, post, { title, text }))
-            "
-          >
-            <span>Save</span>
-          </BaseButton>
-          <BaseButton
-            v-if="!post.isPublished"
-            :class="$style.actionButton"
-            @click.prevent="$emit('publish-draft', post)"
-          >
-            <span>Publish</span>
-          </BaseButton>
+        <!-- Form footer -->
+        <div :class="$style.formFooter">
+          <slot name="form-footer"> </slot>
         </div>
       </form>
     </div>
-    <div v-else :class="[$style.textContainer, $style.indent]">
-      <p>{{ post.text }}</p>
-    </div>
-  </div>
+  </BaseModal>
 </template>
 
 <style lang="scss" module>
 @import '@design';
 
-// General
+.submitButton {
+  width: 100%;
+  border-radius: $size-button-border-radius;
+}
 
-.center {
+.clickable {
+  color: $color-primary;
+  cursor: pointer;
+  &:hover {
+    color: darken($color-primary, 20%);
+  }
+}
+
+.formTitle {
+  padding: 0 0 20px;
+  margin: auto;
+  font-size: 20px;
+  color: $color-primary;
   text-align: center;
 }
 
-.indent {
-  text-indent: 2%;
+.formFooter {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 13px;
 }
 
-.actionButton {
-  width: 30%;
-  margin: 10px 10px 10px auto;
-}
-
-// Post header
-
-.postHeader {
-  padding: 0.5em 0;
-  text-align: left;
-  background: #eee;
-  border: $size-input-border solid $color-input-border;
-}
-
-.postTitle {
+.formContainer {
   width: 100%;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 24px;
-  background: transparent;
-  border: none;
-}
-
-.authorText {
-  display: inline;
-  font-size: 70%;
-}
-
-// Post body
-
-.textContainer {
-  width: 100%;
+  padding: 10px 30px 10px;
   margin: auto;
-  text-align: left;
-  border: $size-input-border solid $color-input-border;
+  background: $color-main;
 }
 
-.editArea {
-  width: 100%;
-  height: 10em;
-  min-height: 5em;
-  max-height: 20em;
-  padding: $size-input-padding-vertical $size-input-padding-horizontal;
-  line-height: 1;
-  vertical-align: top;
-  resize: vertical;
-  border: $size-input-border solid $color-input-border;
+.pullLeft {
+  float: left;
+}
+
+.pullRight {
+  float: right;
+}
+
+.messageContainer {
+  padding: 10px;
+  margin-bottom: 20px;
+  color: $color-main;
+  text-align: left;
+}
+
+.errorContainer {
+  background: $color-error;
+}
+
+.successContainer {
+  background: $color-success;
+}
+
+.successMessage {
+  color: $color-main;
+}
+
+.textKeepNewLine {
+  white-space: pre-line;
+}
+
+.inlineIcon {
+  margin-right: 10px;
+}
+
+.form {
+  text-align: center;
 }
 </style>

@@ -7,7 +7,7 @@ export default [
     component: () => lazyLoadView(import('@views/home')),
     props: true,
     meta: {
-      onlyGuest: true,
+      onlyGuests: true,
     },
   },
   {

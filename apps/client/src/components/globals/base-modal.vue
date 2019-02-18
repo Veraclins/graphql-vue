@@ -46,15 +46,16 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: $layer-modal-z-index;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
-  animation: fadein 0.5s linear;
+
+  @include fadeIn(0.5);
 }
 
 .modal {
-  /* z-index: $layer-modal-z-index; */
   display: flex;
   flex-direction: column;
   width: px-rem(500);
@@ -63,29 +64,12 @@ export default {
   padding: 10px 10px 10px;
   background: $color-main;
   border-radius: 10px;
-  animation: fadein 0.5s linear;
+
+  @include fadeIn(0.5);
 }
 
 .fadeOut {
-  animation: fadeout 0.5s linear;
-}
-
-@keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeout {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  @include fadeOut(0.5);
 }
 
 .modalHeader {

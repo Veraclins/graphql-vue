@@ -1,14 +1,6 @@
 <script>
 export default {
   props: {
-    type: {
-      type: String,
-      default: 'text',
-    },
-    placeholder: {
-      type: String,
-      default: '',
-    },
     name: {
       type: String,
       default: '',
@@ -16,6 +8,14 @@ export default {
     value: {
       type: [String, Number],
       default: '',
+    },
+    options: {
+      type: Array,
+      default: () => [],
+    },
+    defaultOption: {
+      type: String,
+      default: 'Select one',
     },
     errors: {
       type: Array,
@@ -50,15 +50,18 @@ export default {
 
 <template>
   <div :class="$style.control">
-    <input
+    <select
       :name="name"
-      :type="type"
       :value="value"
-      :placeholder="placeholder"
-      :class="[$style.input, { [$style.withError]: inputErrors.length >= 1 }]"
+      :class="[$style.select, { [$style.withError]: inputErrors.length >= 1 }]"
       v-on="listeners"
-    />
-    <section v-show="inputErrors.length >= 1" :class="$style.errorContainer">
+    >
+      <option disabled value="">{{ defaultOption }}</option>
+      <option v-for="(option, index) in options" :key="index" :value="option">{{
+        option
+      }}</option>
+    </select>
+    <section v-show="inputErrors.length >= 1">
       <span
         v-for="(error, index) in inputErrors"
         :key="index"
@@ -74,22 +77,20 @@ export default {
 .control {
   margin-bottom: $size-grid-padding * 1.5;
 }
-.input {
+.select {
   @extend %typography-small;
 
   display: block;
   width: 100%;
   padding: $size-input-padding-vertical $size-input-padding-horizontal;
   line-height: 1;
+  background: $color-main;
   border: $size-input-border solid $color-input-border;
   border-radius: $size-input-border-radius;
 }
 
 .withError {
   border-color: $color-error;
-}
-.errorContainer {
-  /* display: flex; */
 }
 .inputError {
   display: block;

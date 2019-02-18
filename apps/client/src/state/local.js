@@ -34,19 +34,5 @@ export const resolvers = {
       });
       return [];
     },
-    modals: (parent, { modal }, { cache }) => {
-      console.log(modal, 'modals');
-      cache.writeData({
-        data: {
-          loginModal: modal
-            ? {
-                ...modal,
-                __typename: 'LoginModal',
-              }
-            : null,
-        },
-      });
-      return null;
-    },
   },
 };

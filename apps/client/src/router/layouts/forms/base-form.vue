@@ -9,9 +9,12 @@ export default {
   data() {
     return {
       showModal: true,
-      inProgress: false,
-      isSuccess: false,
     };
+  },
+  computed: {
+    inProgress() {
+      return this.properties.inProgress;
+    },
   },
   mounted() {
     this.$root.$on('show-modal', modal => {
@@ -40,16 +43,15 @@ export default {
         <!-- Submit button -->
         <BaseButton
           :disabled="inProgress"
-          :class="$style.largeButton"
+          :class="$style.submitButton"
           type="submit"
         >
-          <BaseIcon v-if="inProgress && !isSuccess" name="sync" spin />
+          <BaseIcon v-if="inProgress" name="sync" spin />
           <span v-else-if="properties.buttonText">{{
             properties.buttonText
           }}</span>
           <span v-else>Submit</span>
         </BaseButton>
-
         <!-- Form footer -->
         <div :class="$style.formFooter">
           <slot name="form-footer"> </slot>
@@ -62,7 +64,7 @@ export default {
 <style lang="scss" module>
 @import '@design';
 
-.largeButton {
+.submitButton {
   width: 100%;
   border-radius: $size-button-border-radius;
 }

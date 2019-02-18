@@ -1,5 +1,26 @@
+<script>
+export default {
+  props: {
+    outline: {
+      type: Boolean,
+      default: false,
+    },
+    plane: {
+      type: Boolean,
+      default: false,
+    },
+  },
+};
+</script>
 <template>
-  <button :class="$style.button" v-on="$listeners">
+  <button
+    :class="[
+      $style.button,
+      { [$style.outline]: outline },
+      { [$style.plane]: plane },
+    ]"
+    v-on="$listeners"
+  >
     <slot />
   </button>
 </template>
@@ -18,10 +39,29 @@
 
   &:disabled {
     cursor: not-allowed;
-    background: $color-button-disabled-bg;
+    background: darken($color-button-bg, 15%);
   }
   &:hover {
     background: darken($color-button-bg, 15%);
   }
+}
+
+.outline {
+  color: $color-button-text;
+  background: transparent;
+  border: 1px solid $color-outline-button-border;
+
+  &:disabled {
+    cursor: not-allowed;
+    background: darken($color-button-bg, 15%);
+  }
+  &:hover {
+    background: darken($color-button-bg, 15%);
+  }
+}
+.plane {
+  color: $color-secondary;
+  background: transparent;
+  border: none;
 }
 </style>

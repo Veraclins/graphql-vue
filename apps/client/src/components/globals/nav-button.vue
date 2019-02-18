@@ -1,5 +1,5 @@
 <template>
-  <BaseButton :class="$style.navButton" v-on="$listeners">
+  <BaseButton :class="$style.navButton" outline v-on="$listeners">
     <slot />
   </BaseButton>
 </template>
@@ -12,12 +12,9 @@
 
   padding: 5px 20px;
   margin-left: $size-grid-padding;
-  color: $color-button-text;
-  cursor: pointer;
-  border: 1px solid $color-outline-button-border;
-  border-radius: 4px;
+
   &:hover {
-    color: $color-text;
+    color: $color-secondary;
     background: $color-button-bg;
   }
 }

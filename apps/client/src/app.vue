@@ -45,7 +45,8 @@ export default {
 
 body {
   margin-top: 80px;
-  background: $color-main;
+  color: $color-main;
+  background: linear-gradient(135deg, #1433c4 0%, #101444 65%, #000564 100%);
 }
 
 #app {
@@ -90,6 +91,10 @@ h6 {
 .container {
   padding: 8px 8%;
   margin: 0 auto;
+
+  @include small {
+    padding: 8px 2%;
+  }
 }
 // ===
 // Vendor
