@@ -23,6 +23,7 @@ export default {
 <style lang="scss" module>
 @import '@design';
 .content {
+  min-height: 82vh;
   font-size: 16px;
   text-align: justify;
 }

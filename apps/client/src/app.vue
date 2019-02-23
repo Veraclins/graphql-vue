@@ -37,6 +37,33 @@ export default {
 // Design variables and utilities from src/design.
 @import '@design';
 
+@font-face {
+  font-family: DINRegular;
+  src: url('~@assets/fonts/FF-DIN-Pro.woff2') format('woff2'),
+    url('~@assets/fonts/FF-DIN-Pro.woff') format('woff'),
+    url('~@assets/fonts/FF-DIN-Pro.otf') format('opentype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: LetterGothicStd;
+  src: url('~@assets/fonts/LetterGothicStd.woff2') format('woff2'),
+    url('~@assets/fonts/LetterGothicStd.woff') format('woff'),
+    url('~@assets/fonts/LetterGothicStd.otf') format('opentype');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: LetterGothicStd-Bold;
+  src: url('~@assets/fonts/LetterGothicStd-Bold.woff2') format('woff2'),
+    url('~@assets/fonts/LetterGothicStd-Bold.woff') format('woff'),
+    url('~@assets/fonts/LetterGothicStd-Bold.otf') format('opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
 *,
 *::before,
 *::after {
@@ -45,10 +72,9 @@ export default {
 
 body {
   margin-top: 80px;
-  line-height: 2rem;
-  color: $color-main;
+  color: $color-text;
   letter-spacing: 0.1rem;
-  background: linear-gradient(135deg, #1433c4 0%, #101444 65%, #000564 100%);
+  background: $color-main;
 }
 
 #app {
@@ -68,28 +94,81 @@ h6 {
 }
 a {
   color: $color-link-text;
+  text-decoration: none;
+}
+
+p,
+span {
+  font-family: DINRegular, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+p {
+  font-family: LetterGothicStd-Bold, sans-serif;
+  font-weight: 400;
+  line-height: 25px;
+}
+strong {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+small {
+  font-family: LetterGothicStd, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+p small {
+  font-family: DINRegular, sans-serif;
 }
 
 h1 {
-  @extend %typography-xxlarge;
+  font-size: 36px;
+  line-height: 43px;
 }
 
-h2 {
-  @extend %typography-xlarge;
+h2,
+h2 span {
+  font-size: 30px;
+  line-height: 36px;
 }
 
 h3 {
-  @extend %typography-large;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 26px;
 }
 
+h4,
+h5 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
 h4 {
-  @extend %typography-medium;
+  font-family: LetterGothicStd-Bold, sans-serif;
 }
 
-h5,
-h6 {
-  @extend %typography-small;
+h5 {
+  font-family: DINRegular, sans-serif;
+  line-height: 31px;
 }
+
+h6,
+p {
+  font-size: 16px;
+}
+
+h6 {
+  font-family: LetterGothicStd, sans-serif;
+  font-weight: 400;
+}
+
 .container {
   padding: 8px 8%;
   margin: 0 auto;

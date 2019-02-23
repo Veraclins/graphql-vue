@@ -3,7 +3,6 @@
 export const defaults = {
   user: null,
   requests: [],
-  loginModal: null,
 };
 
 export const resolvers = {

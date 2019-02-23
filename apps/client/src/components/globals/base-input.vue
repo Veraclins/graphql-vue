@@ -86,7 +86,7 @@ export default {
 }
 
 .withError {
-  border-color: $color-error;
+  border-color: $color-danger;
 }
 .errorContainer {
   /* display: flex; */
@@ -96,7 +96,7 @@ export default {
   padding: 5px $size-input-padding-horizontal 0 5px;
   font-size: 13px;
   line-height: 18px;
-  color: $color-error;
+  color: $color-danger;
   text-align: left;
 }
 </style>

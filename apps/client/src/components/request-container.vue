@@ -107,7 +107,7 @@ export default {
 }
 
 .errorContainer {
-  background: $color-error;
+  background: $color-danger;
 }
 
 .successContainer {

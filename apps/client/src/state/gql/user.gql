@@ -31,6 +31,12 @@ query LocalGetRequests {
 	}
 }
 
+query LocalGetRequest($id: ID!) {
+	request(id: $id) @client {
+		...RequestFields
+	}
+}
+
 # ## Mutations
 
 mutation Login($username: String!, $password: String!) {
@@ -61,8 +67,8 @@ $description: String!
 	}
 }
 
-mutation UpdateRequest($title: String, $device: String, $description: String) {
-	updateRequest(title: $title, device: $device, description: $description) {
+mutation UpdateRequest($id: ID!, $title: String, $device: String, $description: String) {
+	updateRequest(id: $id, title: $title, device: $device, description: $description) {
 		...RequestFields
 	}
 }

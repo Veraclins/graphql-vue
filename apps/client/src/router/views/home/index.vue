@@ -1,12 +1,20 @@
 <script>
 import appConfig from '@src/app.config';
 import Layout from '@layouts/main';
+import showToaster from '@utils/show-toaster';
 export default {
   page: {
     title: 'Home',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout },
+  mounted() {
+    const { params } = this.$route;
+    if (params.action === 'login') {
+      this.showModal({ id: 'login' });
+      showToaster(this.$root, 'You need to login first!', 'error');
+    }
+  },
   methods: {
     showModal(modal) {
       this.$root.$emit('show-modal', modal);
@@ -16,56 +24,45 @@ export default {
 </script>
 
 <template>
-  <Layout>
+  <Layout :class="$style.content">
     <div :class="$style.bannerBg" />
     <div :class="$style.bigTitle">
-      <span :class="$style.bigTitleOne">RELIABILITY</span>
+      <span :class="$style.bigTitleOne">RELIABLE</span>
     </div>
     <section>
       <div :class="$style.contentBanner">
-        <div class="content_banner_inner">
-          <div :class="$style.innerLayout">
-            <h1>
-              <strong>This is VeraTech Solutions Hub.</strong>
-            </h1>
-            <h1>
-              The Home of World Class Maintenance and Repairs for your
-              <i>Modern Devices.</i>
-            </h1>
-            <h5>
-              VeraTech Solutions Hub gives you the peace of mind you need. We
-              care for your devices so you won't lose sleep. Whatever the need
-              of your device, we got you covered.
-            </h5>
-            <div class="buttons_banner">
-              <BaseButton
-                outline
-                class="buttons button_default"
-                @click="showModal({ id: 'signup' })"
-              >
-                CREATE A NEW ACCOUNT
-              </BaseButton>
-              <BaseButton
-                outline
-                class="buttons button_blank"
-                @click="showModal({ id: 'login' })"
-              >
-                LOGIN TO YOUR ACCOUNT
-              </BaseButton>
-            </div>
+        <div :class="$style.innerLayout">
+          <h1>
+            <strong>This is VeraTech Solutions Hub.</strong>
+          </h1>
+          <h1>
+            The Home of World Class Maintenance and Repairs for your
+            <i>Modern Devices.</i>
+          </h1>
+          <h5>
+            VeraTech Solutions Hub gives you the peace of mind you need. We care
+            for your devices so you won't lose sleep. Whatever the need of your
+            device, we got you covered.
+          </h5>
+          <div :class="$style.buttonsBanner">
+            <BaseButton color="secondary" @click="showModal({ id: 'signup' })">
+              CREATE A NEW ACCOUNT
+            </BaseButton>
+            <BaseButton outline @click="showModal({ id: 'login' })">
+              LOGIN TO YOUR ACCOUNT
+            </BaseButton>
           </div>
         </div>
       </div>
-
-      <div class="layout_content wow fadeInUp">
+      <div :class="$style.layoutContent">
         <h1>10M+ users trust VeraTech to care for their devices</h1>
-        <span class="banner_big_title_2">QUALITY</span>
         <p>
           Nothing beats the feeling of knowing that your device is in safe
           hands. VeraTech provides the confidence to be careless. We got your
           back! Whatever the fault, we are here to make it disappear!
         </p>
       </div>
+
       <section :class="$style.highlights">
         <div>
           <div :class="$style.pipeLeft">
@@ -170,7 +167,9 @@ export default {
           issue, no need to panic. Trust us to know what your device wants.
         </p>
       </div>
-
+      <div :class="$style.bigTitle">
+        <span :class="$style.bigTitleThree">PROFESSIONAL</span>
+      </div>
       <div :class="$style.timelineSection">
         <div :class="[$style.timelineBlock, $style.oddTimeline]">
           <div class="">
@@ -234,14 +233,42 @@ export default {
 <style lang="scss" module>
 @import '@design';
 
+.content {
+  margin-top: 80px;
+  color: $color-main;
+  letter-spacing: 0.1rem;
+  background: linear-gradient(135deg, #1433c4 0%, #101444 65%, #000564 100%);
+}
+
+.layoutContent {
+  max-width: 700px;
+  margin: 10px auto;
+  text-align: center;
+}
+
 .contentBanner {
   z-index: 0;
-  padding: 0 0 263px;
+  padding: 0 0 200px;
   text-align: center;
 
-  &.innerLayout {
-    max-width: 605px;
-    margin: 0 auto 10px;
+  .innerLayout {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    padding: 50px 15px;
+    margin: auto;
+    h1 {
+      margin: 50px auto;
+      font-size: 3rem;
+      font-weight: bolder;
+      line-height: 3.5rem;
+      color: azure;
+    }
+
+    h5 {
+      max-width: 700px;
+      margin: 50px auto;
+    }
   }
 }
 
@@ -258,7 +285,7 @@ export default {
 
 .highlights {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 50px;
 
   @include small {
@@ -434,9 +461,9 @@ export default {
 }
 
 .bigTitleTwo,
-.bigTitleOne {
+.bigTitleOne,
+.bigTitleThree {
   position: absolute;
-  top: 220px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -447,7 +474,8 @@ export default {
 
 .bigTitleOne {
   top: 320px;
-  font-size: 240px;
+  font-size: 250px;
+  opacity: 0.1;
 
   @include small {
     font-size: 50px;
@@ -456,7 +484,15 @@ export default {
 
 .bigTitleTwo {
   top: 220px;
-  font-size: 180px;
+  font-size: 160px;
+
+  @include small {
+    font-size: 50px;
+  }
+}
+.bigTitleThree {
+  top: 480px;
+  font-size: 160px;
 
   @include small {
     font-size: 50px;
@@ -476,10 +512,9 @@ export default {
     top: 0;
     bottom: 25px;
     left: 50%;
-    z-index: -1;
     width: 1px;
     content: '';
-    background: #fff;
+    background: $color-main;
   }
 
   @include small {
@@ -497,20 +532,20 @@ export default {
   &::after {
     position: absolute;
     top: 0;
-    z-index: -1;
     width: 80px;
     height: 1px;
     content: '';
-    background: #fff;
+    background: $color-main;
   }
 
   &::before {
     position: absolute;
     top: -9px;
+    z-index: 1;
     width: 18px;
     height: 18px;
     content: '';
-    background: #ffaf30;
+    background: $color-secondary;
     border-radius: 50%;
   }
 
@@ -540,6 +575,10 @@ export default {
   @include small {
     padding: 20px;
     text-align: left;
+
+    &::before {
+      left: -9px;
+    }
   }
 }
 .timelineBlock.evenTimeline {
@@ -573,7 +612,7 @@ export default {
   display: flex;
   align-self: center;
   justify-content: space-between;
-  width: 600px;
+  width: 650px;
   max-width: 100%;
   margin: 100px auto 0;
 
@@ -588,28 +627,27 @@ export default {
     position: absolute;
     top: 25px;
     left: 50%;
-    z-index: -1;
     width: 80px;
     height: 1px;
     content: '';
-    background: #fff;
+    background: $color-main;
   }
 
   &::before {
     position: absolute;
     top: 17px;
-    left: 292px;
+    left: 317px;
+    z-index: 1;
     width: 18px;
     height: 18px;
     content: '';
-    background: #ffaf30;
+    background: $color-secondary;
     border-radius: 50%;
   }
 
   @include small {
     margin: 20px auto;
-    &::after,
-    &::before {
+    &::after {
       display: none;
     }
   }
@@ -620,11 +658,42 @@ export default {
     position: absolute;
     top: 25px;
     right: 50%;
-    z-index: -1;
     width: 80px;
     height: 1px;
     content: '';
-    background: #fff;
+    background: $color-main;
+  }
+
+  @include small {
+    &::after {
+      top: 75px;
+      right: 80%;
+      left: 2px;
+    }
+    &::before {
+      position: absolute;
+      top: 66px;
+      left: -9px;
+      z-index: 1;
+      width: 18px;
+      height: 18px;
+      content: '';
+      background: $color-secondary;
+      border-radius: 50%;
+    }
+  }
+}
+
+.buttonsBanner {
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+  width: 500px;
+  max-width: 90%;
+
+  @include small {
+    flex-direction: column;
+    height: 150px;
   }
 }
 </style>

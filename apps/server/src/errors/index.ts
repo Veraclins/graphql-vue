@@ -11,10 +11,12 @@ export {
   ValidationError,
 } from 'apollo-server-express';
 
-export const formatError = (error: Error) => {
+export const formatError = (error: ApolloError) => {
   // This can be used to send errors to third
   // party services like Sentry or Stackdriver
   logger.error(error);
+  if (error.extensions.code === 'INTERNAL_SERVER_ERROR')
+    error.message = 'Oh oh! Something is not quite right. Please try again!';
   return error;
 };
 

@@ -108,7 +108,7 @@ export default {
     border-color: #5bc0de;
   }
   .error {
-    background: $color-error;
+    background: $color-danger;
   }
   .primary {
     background: rgba(66, 139, 202, 0.9);
@@ -116,6 +116,7 @@ export default {
   }
   .toastBtnClear {
     float: right;
+    margin-left: 10px;
     color: currentColor;
     text-decoration: none;
     cursor: pointer;

@@ -66,7 +66,7 @@ export default {
               this.$props,
               null,
               2
-            )}\n\nEither a \`name\` or \`to\` is required for internal links, or an \`href\` for external links.`
+            )}\n\nEither a 'name' or 'to' is required for internal links, or an 'href' for external links.`
           );
         }
       }

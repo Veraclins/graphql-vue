@@ -1,7 +1,7 @@
-import LoginModal from './login-modal';
+import AuthModal from './auth-modal';
 
-describe('@components/login-modal', () => {
+describe('@components/auth-modal', () => {
   it('exports a valid component', () => {
-    expect(LoginModal).toBeAComponent();
+    expect(AuthModal).toBeAComponent();
   });
 });

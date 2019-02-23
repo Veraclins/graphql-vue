@@ -5,6 +5,8 @@ import {
   DisapproveRequest,
   ResolveRequest,
   LocalSetRequests,
+  GetUserRequests,
+  LocalGetRequest,
 } from '@gql/user';
 import { apolloClient } from '@state';
 
@@ -38,13 +40,15 @@ export const create = async args => {
 };
 
 export const update = async args => {
-  const { title, device, description } = args;
+  const { title, device, description, id } = args;
+  console.log(id, 'id');
   try {
     const {
       data: { updateRequest: request },
     } = await apolloClient.mutate({
       mutation: UpdateRequest,
       variables: {
+        id,
         title,
         device,
         description,
@@ -81,6 +85,37 @@ export const changeStatus = async args => {
     cacheRequest([request]);
     return true;
   } catch (err) {
+    throw err;
+  }
+};
+
+export const getUserRequests = async () => {
+  try {
+    const {
+      data: { getUserRequests: requests },
+    } = await apolloClient.query({
+      query: GetUserRequests,
+    });
+    cacheRequest(requests);
+    return requests;
+  } catch (err) {
+    throw err;
+  }
+};
+export const getRequest = async id => {
+  try {
+    const {
+      data: { request },
+    } = await apolloClient.query({
+      query: LocalGetRequest,
+      variables: {
+        id,
+      },
+    });
+    console.log(request);
+    return request;
+  } catch (err) {
+    console.log(err);
     throw err;
   }
 };

@@ -20,24 +20,6 @@ export default [
     },
   },
   {
-    path: '/requests',
-    name: 'requests',
-    component: () => lazyLoadView(import('@views/requests')),
-    props: true,
-    meta: {
-      authRequired: true,
-    },
-  },
-  {
-    path: '/requests/:id',
-    name: 'single-request',
-    component: () => lazyLoadView(import('@views/requests')),
-    props: true,
-    meta: {
-      authRequired: true,
-    },
-  },
-  {
     path: '/admin',
     name: 'admin',
     component: () => lazyLoadView(import('@views/loading')),

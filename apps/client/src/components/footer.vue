@@ -19,7 +19,7 @@ export default {
             Agada Clinton
           </BaseLink>
         </strong>
-        © {{ getYear }} VeraTech.
+        ©{{ getYear }} VeraTech.
       </small>
     </p>
   </footer>

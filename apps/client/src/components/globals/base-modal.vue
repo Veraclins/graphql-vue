@@ -1,6 +1,12 @@
 <script>
 export default {
   inheritAttrs: false,
+  props: {
+    size: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       closeOut: false,
@@ -36,7 +42,13 @@ export default {
       :class="[$style.modalBackdrop, { [$style.fadeOut]: closeOut }]"
       @click.self="close"
     >
-      <div :class="[$style.modal, { [$style.fadeOut]: closeOut }]">
+      <div
+        :class="[
+          $style.modal,
+          { [$style.fadeOut]: closeOut },
+          { [$style[size]]: size },
+        ]"
+      >
         <header :class="$style.modalHeader">
           <slot name="header" />
           <button type="button" :class="$style.btnClose" @click="close">
@@ -110,5 +122,13 @@ export default {
   cursor: pointer;
   background: transparent;
   border: none;
+}
+
+.medium {
+  width: px-rem(700);
+}
+
+.wide {
+  width: px-rem(1000);
 }
 </style>
