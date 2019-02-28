@@ -1,10 +1,10 @@
 mutation {
-	createUser(
+	user: createUser(
 	data: {
 		email: "veraclins@example.com"
 		username: "Veraclins"
-		password: "$2a$10$cI9ZuCj8IZNsmnZ0etJDW.CYbSHVQdULxwXtKNSNNQ4bv78DRZLHO" # "password"
-		role: ADMIN
+		password: "$2a$10$P/YqDDk0CEAnphbTo0nmeuq4ABTExmLt84JxhkscaklZ8t08VDoja" # "password1"
+		role: USER
 		requests: {
 			create: [
 			 {
@@ -23,6 +23,16 @@ mutation {
 				description: "Cracked battery"
 			}]
 		}
+	}
+	) {
+		id
+	}, 
+	admin: createUser(
+	data: {
+		email: "admin@veratech.com"
+		username: "Admin"
+		password: "$2a$10$P/YqDDk0CEAnphbTo0nmeuq4ABTExmLt84JxhkscaklZ8t08VDoja" # "password1"
+		role: ADMIN
 	}
 	) {
 		id

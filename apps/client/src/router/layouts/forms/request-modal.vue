@@ -41,6 +41,12 @@ export default {
         modal.id === 'create-request' || modal.id === 'update-request';
     },
 
+    isSuccess(message) {
+      this.closeModal();
+      showToaster(this.$root, message);
+      this.$root.$emit('request-updated');
+    },
+
     async create() {
       this.clearErrors();
       this.inProgress = true;
@@ -51,9 +57,9 @@ export default {
       };
       try {
         await create(args);
-        this.closeModal();
-        showToaster(this.$root, 'Request created successfully!');
+        this.isSuccess('Request created successfully!');
       } catch (err) {
+        console.log(err);
         this.setError(err);
       }
       this.formProperties.inProgress = false;
@@ -70,19 +76,11 @@ export default {
       };
       try {
         await update(args);
-        this.closeModal();
-        showToaster(this.$root, 'Request created successfully!');
+        this.isSuccess('Request updated successfully!');
       } catch (err) {
         this.setError(err);
       }
       this.formProperties.inProgress = false;
-    },
-
-    showMessage(message, theme = 'success') {
-      this.$root.$emit('show-toaster', {
-        message,
-        theme,
-      });
     },
 
     showUpdateForm(request) {
@@ -130,7 +128,7 @@ export default {
         this.validationErrors = errors.errors;
       }
       this.errors = errors;
-      this.showMessage(errors.message, 'error');
+      showToaster(this.$root, errors.message, 'error');
     },
   },
 };

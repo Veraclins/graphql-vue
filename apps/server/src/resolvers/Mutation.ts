@@ -22,7 +22,8 @@ export const Mutation: MutationResolvers.Type<TypeMap> = {
 
     const valid = await compare(password, user.password);
     if (!valid) throw new AuthenticationError(message);
-    return getAuthPayload(user);
+    const requests = await context.prisma.user({ id: user.id }).requests();
+    return getAuthPayload({ ...user, requests });
   },
 
   signup: async (parent, args, context) => {
@@ -61,7 +62,7 @@ export const Mutation: MutationResolvers.Type<TypeMap> = {
   },
 
   updateRequest: async (parent, args, context) => {
-    const { id } = args;
+    const { id, ...data } = args;
     const { id: userId } = context.user;
     const requestExists = await context.prisma.$exists.request({
       id,
@@ -69,10 +70,18 @@ export const Mutation: MutationResolvers.Type<TypeMap> = {
     });
     if (!requestExists)
       throw new NotFoundError("You don't have such a request");
+    const requestEditable = await context.prisma.$exists.request({
+      id,
+      status_in: ['DISAPPROVED', 'PENDING'],
+    });
+    if (!requestEditable)
+      throw new NotFoundError(
+        'You cannot update a request that has already been approved or resolved'
+      );
 
     return context.prisma.updateRequest({
       where: { id },
-      data: args,
+      data,
     });
   },
 

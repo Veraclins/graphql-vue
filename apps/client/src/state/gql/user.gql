@@ -13,9 +13,6 @@ query GetRequestById($id: ID!) {
 query GetAllRequests {
 	getAllRequests {
 		...RequestFields
-		owner {
-			username
-		}
 	}
 }
 
@@ -33,7 +30,13 @@ query LocalGetRequests {
 
 query LocalGetRequest($id: ID!) {
 	request(id: $id) @client {
-		...RequestFields
+		id
+		title
+		device
+		description
+		status
+		createdAt
+		updatedAt
 	}
 }
 
@@ -43,6 +46,9 @@ mutation Login($username: String!, $password: String!) {
 	login(username: $username, password: $password) {
 		user {
 			...UserMainFields
+			requests {
+				...RequestFields
+			}
 		}
 		token
 	}
@@ -73,19 +79,19 @@ mutation UpdateRequest($id: ID!, $title: String, $device: String, $description: 
 	}
 }
 
-mutation ApproveRequest($id: ID) {
+mutation ApproveRequest($id: ID!) {
 	approveRequest(id: $id) {
 		...RequestFields
 	}
 }
 
-mutation DisapproveRequest($id: ID) {
+mutation DisapproveRequest($id: ID!) {
 	disapproveRequest(id: $id) {
 		...RequestFields
 	}
 }
 
-mutation ResolveRequest($id: ID) {
+mutation ResolveRequest($id: ID!) {
 	resolveRequest(id: $id) {
 		...RequestFields
 	}
@@ -99,7 +105,6 @@ mutation LocalSetRequests($requests: [Request!]!) {
 	setRequests(requests: $requests) @client
 }
 
-
 # ## Fragments
 
 fragment RequestFields on Request {
@@ -110,6 +115,9 @@ fragment RequestFields on Request {
 	status
 	createdAt
 	updatedAt
+	owner {
+		username
+	}
 }
 
 fragment UserMainFields on User {

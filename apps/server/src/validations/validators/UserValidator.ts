@@ -1,10 +1,4 @@
-import {
-  IsAlpha,
-  IsAlphanumeric,
-  IsEmail,
-  Matches,
-  MinLength,
-} from 'class-validator';
+import { IsAlpha, IsEmail, Matches, MinLength } from 'class-validator';
 
 import { IsTheSameAs } from '@validations/isTheSameAs';
 
@@ -16,7 +10,6 @@ export default class UserValidator {
   email: string;
 
   @MinLength(3, { message: atLeast3 })
-  @IsAlphanumeric({ message: 'use only letters and numbers' })
   username: string;
 
   @Matches(passwordRegex, {

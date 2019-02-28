@@ -1,7 +1,9 @@
 <script>
 import { login, signup } from '@services/auth';
 import { formatErrors } from '@services/errors';
+import { getAllRequests } from '@services/request';
 import showToaster from '@utils/show-toaster';
+import { apolloOnLogin } from '@state';
 import BaseForm from '@layouts/forms/base-form';
 export default {
   components: { BaseForm },
@@ -36,6 +38,12 @@ export default {
       this.showModal = false;
       this.modalId = '';
     },
+
+    isSuccess() {
+      apolloOnLogin();
+      this.formProperties.inProgress = false;
+      this.closeModal();
+    },
     openModal(modal) {
       if (modal.id === 'signup') this.showSignUpForm();
       if (modal.id === 'login') this.showLogInForm();
@@ -48,15 +56,14 @@ export default {
       this.formProperties.inProgress = true;
 
       try {
-        await login(this.username, this.password);
-        this.formProperties.inProgress = false;
-        this.closeModal();
+        const user = await login(this.username, this.password);
+        user.role === 'ADMIN' && (await getAllRequests());
+        this.isSuccess();
       } catch (err) {
         this.setError(err);
       }
     },
-    // Try to create a new account for the user
-    // with the username and password they provided.
+
     async signUp() {
       this.clearErrors();
       this.formProperties.inProgress = true;
@@ -67,8 +74,8 @@ export default {
           this.confirmPassword,
           this.username
         );
-        this.formProperties.inProgress = false;
-        this.closeModal();
+
+        this.isSuccess();
       } catch (err) {
         this.setError(err);
       }

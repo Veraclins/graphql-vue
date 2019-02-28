@@ -15,12 +15,6 @@ export default {
           title: 'Dashboard',
         },
       ],
-      adminNavRoutes: [
-        {
-          name: 'admin',
-          title: 'Admin Page',
-        },
-      ],
     };
   },
   mounted() {
@@ -69,14 +63,12 @@ export default {
       :class="[$style.navbarRight, { [$style.show]: menuActive }]"
       @click="closeMenu"
     >
-      <NavBarRoutes
-        v-if="user && user.role === 'ADMIN'"
-        :routes="adminNavRoutes"
-      />
       <template v-if="user">
-        {{ user.username }}
         <NavBarRoutes :routes="loggedInNavRoutes" />
-        <NavButton @click="showModal({ id: 'create-request' })">
+        <NavButton
+          v-show="user.role === 'USER'"
+          @click="showModal({ id: 'create-request' })"
+        >
           Create Request
         </NavButton>
         <NavButton @click="logOut">

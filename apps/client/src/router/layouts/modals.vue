@@ -1,9 +1,9 @@
 <script>
 import AuthModal from '@layouts/forms/auth-modal';
 import RequestFormModal from '@layouts/forms/request-modal';
-import RequestModal from '@layouts/request-modal';
+import RequestDetailsModal from '@layouts/request-details';
 export default {
-  components: { AuthModal, RequestFormModal, RequestModal },
+  components: { AuthModal, RequestFormModal, RequestDetailsModal },
 };
 </script>
 
@@ -11,6 +11,6 @@ export default {
   <div>
     <AuthModal />
     <RequestFormModal />
-    <RequestModal />
+    <RequestDetailsModal />
   </div>
 </template>

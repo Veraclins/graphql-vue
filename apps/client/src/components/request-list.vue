@@ -1,20 +1,26 @@
 <script>
-import PostContainer from '@components/post-container';
+import RequestContainer from '@components/request-container';
 
 export default {
-  components: { PostContainer },
+  components: { RequestContainer },
   props: {
-    posts: {
+    requests: {
       type: Array,
       required: true,
     },
-    showAuthor: {
-      type: Boolean,
-      default: false,
+  },
+  computed: {
+    pending: function() {
+      return this.requests.filter(request => request.status === 'PENDING');
     },
-    editable: {
-      type: Boolean,
-      default: false,
+    approved: function() {
+      return this.requests.filter(request => request.status === 'APPROVED');
+    },
+    resolved: function() {
+      return this.requests.filter(request => request.status === 'RESOLVED');
+    },
+    disapproved: function() {
+      return this.requests.filter(request => request.status === 'DISAPPROVED');
     },
   },
 };
@@ -22,23 +28,72 @@ export default {
 
 <template>
   <div>
-    <PostContainer
-      v-for="post in posts"
-      :key="post.id"
-      :post="post"
-      :show-author="showAuthor"
-      :editable="editable"
-      :class="$style.postContainer"
-      v-on="$listeners"
-    />
+    <div v-show="pending.length > 0" :class="$style.requestSection">
+      <h1 :class="$style.pending">Pending Requests</h1>
+      <div :class="$style.content">
+        <RequestContainer
+          v-for="request in pending"
+          :key="request.id"
+          :request="request"
+        />
+      </div>
+    </div>
+    <div v-show="disapproved.length > 0" :class="$style.requestSection">
+      <h1 :class="$style.disapproved">Disapproved Requests</h1>
+      <div :class="$style.content">
+        <RequestContainer
+          v-for="request in disapproved"
+          :key="request.id"
+          :request="request"
+        />
+      </div>
+    </div>
+    <div v-show="approved.length > 0" :class="$style.requestSection">
+      <h1 :class="$style.approved">Approved Requests</h1>
+      <div :class="$style.content">
+        <RequestContainer
+          v-for="request in approved"
+          :key="request.id"
+          :request="request"
+        />
+      </div>
+    </div>
+    <div v-show="resolved.length > 0" :class="$style.requestSection">
+      <h1 :class="$style.resolved">Resolved Requests</h1>
+      <div :class="$style.content">
+        <RequestContainer
+          v-for="request in resolved"
+          :key="request.id"
+          :request="request"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" module>
 @import '@design';
 
-.postContainer {
-  width: 90%;
-  margin: 20px auto;
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.requestSection {
+  padding: 20px 10px;
+  text-align: center;
+}
+
+.resolved {
+  color: $color-success;
+}
+.approved {
+  color: $color-primary;
+}
+.pending {
+  color: $color-warning;
+}
+.disapproved {
+  color: $color-danger;
 }
 </style>

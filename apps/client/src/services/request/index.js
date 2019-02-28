@@ -5,8 +5,9 @@ import {
   DisapproveRequest,
   ResolveRequest,
   LocalSetRequests,
-  GetUserRequests,
-  LocalGetRequest,
+  LocalGetRequests,
+  LocalAddToRequests,
+  GetAllRequests,
 } from '@gql/user';
 import { apolloClient } from '@state';
 
@@ -15,6 +16,15 @@ export const cacheRequest = requests => {
     mutation: LocalSetRequests,
     variables: {
       requests,
+    },
+  });
+};
+
+export const updateRequestCache = request => {
+  return apolloClient.mutate({
+    mutation: LocalAddToRequests,
+    variables: {
+      request,
     },
   });
 };
@@ -41,11 +51,8 @@ export const create = async args => {
 
 export const update = async args => {
   const { title, device, description, id } = args;
-  console.log(id, 'id');
   try {
-    const {
-      data: { updateRequest: request },
-    } = await apolloClient.mutate({
+    await apolloClient.mutate({
       mutation: UpdateRequest,
       variables: {
         id,
@@ -54,7 +61,6 @@ export const update = async args => {
         description,
       },
     });
-    cacheRequest([request]);
     return true;
   } catch (err) {
     throw err;
@@ -70,52 +76,39 @@ export const changeStatus = async args => {
       ? DisapproveRequest
       : ResolveRequest;
   try {
-    const { data } = await apolloClient.mutate({
+    await apolloClient.mutate({
       mutation: MUTATION,
       variables: {
         id,
       },
     });
-    const request =
-      action === 'approve'
-        ? data.approveRequest
-        : action === 'disapprove'
-        ? data.disapproveRequest
-        : data.resolveRequest;
-    cacheRequest([request]);
     return true;
   } catch (err) {
     throw err;
   }
 };
 
-export const getUserRequests = async () => {
+export const getRequests = async () => {
   try {
-    const {
-      data: { getUserRequests: requests },
-    } = await apolloClient.query({
-      query: GetUserRequests,
+    const { data } = await apolloClient.query({
+      query: LocalGetRequests,
     });
-    cacheRequest(requests);
-    return requests;
+    return data.requests;
   } catch (err) {
     throw err;
   }
 };
-export const getRequest = async id => {
+
+export const getAllRequests = async () => {
   try {
     const {
-      data: { request },
+      data: { getAllRequests: requests },
     } = await apolloClient.query({
-      query: LocalGetRequest,
-      variables: {
-        id,
-      },
+      query: GetAllRequests,
     });
-    console.log(request);
-    return request;
+    cacheRequest(requests);
+    return requests;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };

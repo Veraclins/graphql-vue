@@ -25,6 +25,7 @@
   margin: auto;
   font-size: 20px;
   color: $color-primary;
+  text-align: left;
 }
 
 .requestFooter {

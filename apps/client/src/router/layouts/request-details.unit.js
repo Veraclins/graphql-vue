@@ -1,6 +1,6 @@
-import RequestModal from './request-modal';
+import RequestModal from './request-details';
 
-describe('@components/request-modal', () => {
+describe('@components/request-details', () => {
   it('exports a valid component', () => {
     expect(RequestModal).toBeAComponent();
   });

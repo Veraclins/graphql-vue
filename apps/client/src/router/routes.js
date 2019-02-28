@@ -22,7 +22,7 @@ export default [
   {
     path: '/admin',
     name: 'admin',
-    component: () => lazyLoadView(import('@views/loading')),
+    component: () => lazyLoadView(import('@views/admin')),
     props: true,
     meta: {
       authRequired: true,

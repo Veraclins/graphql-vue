@@ -1,9 +1,16 @@
 <script>
-export default {};
+export default {
+  props: {
+    size: {
+      type: String,
+      default: '',
+    },
+  },
+};
 </script>
 
 <template>
-  <div :class="$style.cardContainer">
+  <div :class="[$style.cardContainer, { [$style[size]]: size }]">
     <div :class="$style.cardBody">
       <slot />
     </div>
@@ -19,6 +26,7 @@ export default {};
 .cardContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 380px;
   max-width: 100%;
   padding: 0 20px;
@@ -30,6 +38,17 @@ export default {};
 .cardFooter {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  padding: 10px;
   color: $color-primary;
+}
+.cardBody {
+  padding: 10px;
+  text-align: center;
+}
+
+.medium {
+  width: 700px;
+  max-width: 100%;
 }
 </style>

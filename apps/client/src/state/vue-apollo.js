@@ -82,10 +82,7 @@ export const createProvider = (options = {}) => {
 
 // Manually call this when user log in
 export const onLogin = async (apolloClient, token) => {
-  const {
-    currentRoute: { params },
-  } = router;
-  router.push(params.redirect || '/dashboard');
+  router.push('/dashboard');
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
 };
 

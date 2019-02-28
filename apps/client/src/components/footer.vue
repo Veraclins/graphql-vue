@@ -30,9 +30,7 @@ export default {
 
 .footer {
   display: flex;
-  <<<<<<<head=======
   flex-wrap: wrap;
-  >>>>>>>designhome page
   align-items: center;
   justify-content: space-between;
   color: $color-main;
