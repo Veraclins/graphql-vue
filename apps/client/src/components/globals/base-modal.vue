@@ -1,15 +1,31 @@
 <script>
 export default {
   inheritAttrs: false,
+  props: {
+    size: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       closeOut: false,
     };
   },
+  created() {
+    document.addEventListener('keydown', e => {
+      if (!this.closeOut && e.keyCode === 27) {
+        this.close();
+      }
+    });
+  },
   mounted() {
     this.$root.$on('show-modal', () => {
       this.closeOut = false;
     });
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.close());
   },
   methods: {
     close() {
@@ -22,8 +38,17 @@ export default {
 
 <template>
   <transition name="modal-fade">
-    <div :class="[$style.modalBackdrop, { [$style.fadeOut]: closeOut }]">
-      <div :class="[$style.modal, { [$style.fadeOut]: closeOut }]">
+    <div
+      :class="[$style.modalBackdrop, { [$style.fadeOut]: closeOut }]"
+      @click.self="close"
+    >
+      <div
+        :class="[
+          $style.modal,
+          { [$style.fadeOut]: closeOut },
+          { [$style[size]]: size },
+        ]"
+      >
         <header :class="$style.modalHeader">
           <slot name="header" />
           <button type="button" :class="$style.btnClose" @click="close">
@@ -56,6 +81,7 @@ export default {
 }
 
 .modal {
+  z-index: $layer-modal-z-index + 1;
   display: flex;
   flex-direction: column;
   width: px-rem(500);
@@ -96,5 +122,13 @@ export default {
   cursor: pointer;
   background: transparent;
   border: none;
+}
+
+.medium {
+  width: px-rem(700);
+}
+
+.wide {
+  width: px-rem(1000);
 }
 </style>

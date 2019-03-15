@@ -4,15 +4,9 @@ import { UserInputError } from '@errors';
 import { Context } from '@utils/interfaces';
 import validateRequest from '@validations';
 import LoginValidator from '@validations/validators/LoginValidator';
+import RequestValidator from '@validations/validators/RequestValidator';
 import SignupValidator from '@validations/validators/SignupValidator';
 
-interface ResolverOptions {
-  resolve: Function;
-  root: any;
-  args: any;
-  context: Context;
-  info: GraphQLResolveInfo;
-}
 const validate = async (
   resolve: Function,
   root: any,
@@ -45,4 +39,12 @@ export default {
     context: Context,
     info: GraphQLResolveInfo
   ) => validate(resolve, root, args, context, info, LoginValidator),
+
+  validateRequests: async (
+    resolve: Function,
+    root: any,
+    args: any,
+    context: Context,
+    info: GraphQLResolveInfo
+  ) => validate(resolve, root, args, context, info, RequestValidator),
 };

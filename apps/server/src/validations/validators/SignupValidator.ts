@@ -1,4 +1,4 @@
-import { IsDefined } from 'class-validator';
+import { IsAlphanumeric, IsDefined } from 'class-validator';
 
 import UserValidator from '@validations/validators/UserValidator';
 
@@ -8,6 +8,7 @@ export default class SignupValidator extends UserValidator {
   email: string;
 
   @IsDefined({ message: required })
+  @IsAlphanumeric({ message: 'use only letters and numbers' })
   username: string;
 
   @IsDefined({ message: required })

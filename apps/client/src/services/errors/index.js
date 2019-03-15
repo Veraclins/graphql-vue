@@ -15,7 +15,7 @@ export const formatErrors = err => {
     };
   }
 
-  if (networkError) {
+  if (networkError && networkError.result) {
     const {
       result: { errors },
     } = networkError;
@@ -25,4 +25,8 @@ export const formatErrors = err => {
       message,
     };
   }
+
+  return {
+    message: 'Unable to connect! Please check your network connection',
+  };
 };

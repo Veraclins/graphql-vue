@@ -43,3 +43,8 @@ export const clearSession = () => {
     localStorage.removeItem(item)
   );
 };
+
+/**
+ * @description Remove authentication data from localStorage
+ */
+export const isAdmin = () => getSession() && getSession().role === 'ADMIN';

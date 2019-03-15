@@ -1,5 +1,5 @@
 <script>
-import { create } from '@services/request';
+import { create, update } from '@services/request';
 import { formatErrors } from '@services/errors';
 import showToaster from '@utils/show-toaster';
 import BaseForm from '@layouts/forms/base-form';
@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       showModal: false,
-      modalId: '',
+      requestId: '',
       title: '',
       device: '',
       description: '',
@@ -33,13 +33,18 @@ export default {
   methods: {
     closeModal() {
       this.showModal = false;
-      this.modalId = '';
     },
     openModal(modal) {
       if (modal.id === 'create-request') this.showCreateForm();
-      if (modal.id === 'update-request') this.showUpdateForm();
+      if (modal.id === 'update-request') this.showUpdateForm(modal.request);
       this.showModal =
         modal.id === 'create-request' || modal.id === 'update-request';
+    },
+
+    isSuccess(message) {
+      this.closeModal();
+      showToaster(this.$root, message);
+      this.$root.$emit('request-updated');
     },
 
     async create() {
@@ -52,35 +57,45 @@ export default {
       };
       try {
         await create(args);
-        this.closeModal();
-        showToaster(this.$root, 'Request created successfully!');
+        this.isSuccess('Request created successfully!');
+      } catch (err) {
+        console.log(err);
+        this.setError(err);
+      }
+      this.formProperties.inProgress = false;
+    },
+
+    async update() {
+      this.clearErrors();
+      this.inProgress = true;
+      const args = {
+        id: this.requestId,
+        title: this.title,
+        device: this.device,
+        description: this.description,
+      };
+      try {
+        await update(args);
+        this.isSuccess('Request updated successfully!');
       } catch (err) {
         this.setError(err);
       }
       this.formProperties.inProgress = false;
     },
 
-    showMessage(message, theme = 'success') {
-      this.$root.$emit('show-toaster', {
-        message,
-        theme,
-      });
-    },
-
-    showUpdateForm() {
+    showUpdateForm(request) {
+      this.requestId = request.id;
+      this.title = request.title;
+      this.device = request.device;
+      this.description = request.description;
       this.formProperties = {
-        title: 'Create a new request',
-        buttonText: 'Create',
-        leftLinkText: '',
-        rightLinkText: 'Already have an account?',
-        rightAction: this.showCreateForm,
+        title: 'Update the request',
+        buttonText: 'Update Request',
         inProgress: false,
-        action: this.signUp,
+        action: this.update,
       };
       this.isUpdate = true;
-      this.usernamePlaceHolder = 'Username';
       this.clearErrors();
-      this.clearContent();
     },
 
     showCreateForm() {
@@ -113,7 +128,7 @@ export default {
         this.validationErrors = errors.errors;
       }
       this.errors = errors;
-      this.showMessage(errors.message, 'error');
+      showToaster(this.$root, errors.message, 'error');
     },
   },
 };
@@ -205,7 +220,7 @@ export default {
 }
 
 .errorContainer {
-  background: $color-error;
+  background: $color-danger;
 }
 
 .successContainer {

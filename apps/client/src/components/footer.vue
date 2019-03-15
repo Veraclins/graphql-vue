@@ -10,30 +10,18 @@ export default {
 
 <template>
   <footer class="container" :class="[$style.footer]">
-    <BaseLink name="home">
-      <img
-        src="@assets/images/veratech.png"
-        alt="Logo"
-        width="144"
-        height="42"
-      />
-    </BaseLink>
-    <div>
-      <p>
-        <strong>Office Address: </strong> 235 Ikorodu Road, Ilupeju, Lagos
-      </p>
-      <p>
-        <small>
-          Designed with love by
-          <strong>
-            <BaseLink href="https://twitter.com/icstps">
-              Agada Clinton
-            </BaseLink>
-          </strong>
-          © {{ getYear }} VeraTech.
-        </small>
-      </p>
-    </div>
+    <p> <strong>Office Address: </strong> 235 Ikorodu Road, Ilupeju, Lagos </p>
+    <p>
+      <small>
+        Designed with love by
+        <strong>
+          <BaseLink href="https://twitter.com/icstps">
+            Agada Clinton
+          </BaseLink>
+        </strong>
+        ©{{ getYear }} VeraTech.
+      </small>
+    </p>
   </footer>
 </template>
 
@@ -42,6 +30,7 @@ export default {
 
 .footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   color: $color-main;

@@ -49,9 +49,9 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
   if (routeTo.matched.some(route => route.meta.authRequired)) {
     if (!isValidSession()) {
       return next({
-        path: '/',
+        name: 'home',
         params: {
-          nextUrl: routeTo.fullPath,
+          redirect: routeTo.fullPath,
           action: 'login',
         },
       });
@@ -63,15 +63,18 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
       const user = getSession();
       if (!user || user.role !== 'ADMIN') {
         return next({
-          path: '/dashboard',
+          name: 'dashboard',
+          params: {
+            action: 'admin-only',
+          },
         });
       }
       return next();
     }
     return next({
       path: '/',
-      params: {
-        nextUrl: routeTo.fullPath,
+      query: {
+        redirect: routeTo.fullPath,
         action: 'login',
       },
     });

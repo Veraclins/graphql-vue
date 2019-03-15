@@ -72,7 +72,12 @@ export const isAdmin = applyMiddleware(
   ['approveRequest', 'disapproveRequest', 'resolveRequest'],
   ['getAllRequests']
 );
-const { validateSignup, validateLogin } = validators;
+const { validateSignup, validateLogin, validateRequests } = validators;
 
 export const isValidSignup = applyMiddleware(validateSignup, ['signup'], false);
 export const isValidLogin = applyMiddleware(validateLogin, ['login'], false);
+export const isValidRequest = applyMiddleware(
+  validateRequests,
+  ['createRequest', 'updateRequest'],
+  false
+);

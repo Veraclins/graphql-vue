@@ -1,6 +1,4 @@
 <script>
-import formatDate from '@utils/format-date';
-
 export default {
   props: {
     request: {
@@ -8,125 +6,37 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      title: this.request.title,
-      device: this.request.device,
-      description: this.request.description,
-      status: this.request.status,
-    };
-  },
   methods: {
-    formatDate(date) {
-      return formatDate(date, 'MMM Do, YYYY - hh:mm a');
+    showRequest(request) {
+      this.$root.$emit('show-modal', { id: 'show-request', request });
     },
   },
 };
 </script>
 
 <template>
-  <BaseModal>
-    <div :class="$style.formContainer">
-      <!-- Form header -->
-      <slot name="form-header"> </slot>
-      <form :class="$style.form" @submit.prevent="properties.action">
-        <!-- Form inputs -->
-        <slot name="form-inputs"> </slot>
-        <!-- Submit button -->
-        <BaseButton
-          :disabled="inProgress"
-          :class="$style.submitButton"
-          type="submit"
-        >
-          <BaseIcon v-if="inProgress" name="sync" spin />
-          <span v-else-if="properties.buttonText">{{
-            properties.buttonText
-          }}</span>
-          <span v-else>Submit</span>
-        </BaseButton>
-        <!-- Form footer -->
-        <div :class="$style.formFooter">
-          <slot name="form-footer"> </slot>
-        </div>
-      </form>
-    </div>
-  </BaseModal>
+  <BaseCard>
+    <p>{{ request.title }}</p>
+    <template #card-footer>
+      <small>{{ request.status }}</small>
+      <a @click="showRequest(request)">View</a>
+    </template>
+  </BaseCard>
 </template>
 
 <style lang="scss" module>
 @import '@design';
 
-.submitButton {
-  width: 100%;
-  border-radius: $size-button-border-radius;
+.resolved {
+  color: $color-success;
 }
-
-.clickable {
+.approved {
   color: $color-primary;
-  cursor: pointer;
-  &:hover {
-    color: darken($color-primary, 20%);
-  }
 }
-
-.formTitle {
-  padding: 0 0 20px;
-  margin: auto;
-  font-size: 20px;
-  color: $color-primary;
-  text-align: center;
+.pending {
+  color: $color-warning;
 }
-
-.formFooter {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  font-size: 13px;
-}
-
-.formContainer {
-  width: 100%;
-  padding: 10px 30px 10px;
-  margin: auto;
-  background: $color-main;
-}
-
-.pullLeft {
-  float: left;
-}
-
-.pullRight {
-  float: right;
-}
-
-.messageContainer {
-  padding: 10px;
-  margin-bottom: 20px;
-  color: $color-main;
-  text-align: left;
-}
-
-.errorContainer {
-  background: $color-error;
-}
-
-.successContainer {
-  background: $color-success;
-}
-
-.successMessage {
-  color: $color-main;
-}
-
-.textKeepNewLine {
-  white-space: pre-line;
-}
-
-.inlineIcon {
-  margin-right: 10px;
-}
-
-.form {
-  text-align: center;
+.disapproved {
+  color: $color-danger;
 }
 </style>

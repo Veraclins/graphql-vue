@@ -5,6 +5,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    rounded: {
+      type: Boolean,
+      default: false,
+    },
+    color: {
+      type: String,
+      default: null,
+    },
     plane: {
       type: Boolean,
       default: false,
@@ -16,8 +24,9 @@ export default {
   <button
     :class="[
       $style.button,
+      { [$style[color]]: color },
       { [$style.outline]: outline },
-      { [$style.plane]: plane },
+      { [$style.rounded]: rounded },
     ]"
     v-on="$listeners"
   >
@@ -47,21 +56,38 @@ export default {
 }
 
 .outline {
-  color: $color-button-text;
-  background: transparent;
+  background-color: transparent;
   border: 1px solid $color-outline-button-border;
-
-  &:disabled {
-    cursor: not-allowed;
-    background: darken($color-button-bg, 15%);
-  }
-  &:hover {
-    background: darken($color-button-bg, 15%);
-  }
 }
-.plane {
-  color: $color-secondary;
-  background: transparent;
-  border: none;
+
+.rounded {
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+.primary {
+  background-color: $color-primary;
+  border: 1px solid $color-primary;
+}
+.secondary {
+  background-color: $color-secondary;
+  border: 1px solid $color-secondary;
+}
+.success {
+  background-color: $color-success;
+  border: 1px solid $color-success;
+}
+.danger {
+  background-color: $color-danger;
+  border: 1px solid $color-danger;
+}
+
+.warning {
+  background-color: $color-warning;
+  border: 1px solid $color-warning;
+}
+.info {
+  background-color: $color-info;
+  border: 1px solid $color-info;
 }
 </style>

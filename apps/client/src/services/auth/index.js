@@ -1,8 +1,9 @@
 import jwtDecode from 'jwt-decode';
 
 import { Login, Signup, LocalSetLoggedInUser } from '@gql/user';
-import { apolloClient, apolloOnLogin, apolloOnLogout } from '@state';
+import { apolloClient, apolloOnLogout } from '@state';
 import { setSession, clearSession } from '@services/auth/session';
+import { cacheRequest } from '@services/request';
 import router from '@src/router';
 
 /**
@@ -21,7 +22,6 @@ export const setAuth = async (user, token) => {
   const tokenInfo = jwtDecode(token);
   tokenInfo.token = token;
   setSession(tokenInfo);
-  apolloOnLogin();
 };
 
 /**
@@ -33,7 +33,10 @@ export const login = async (username, password) => {
   try {
     const {
       data: {
-        login: { user, token },
+        login: {
+          token,
+          user: { requests, ...others },
+        },
       },
     } = await apolloClient.mutate({
       mutation: Login,
@@ -42,8 +45,9 @@ export const login = async (username, password) => {
         password,
       },
     });
-    setAuth(user, token);
-    return true;
+    await setAuth(others, token);
+    cacheRequest(requests);
+    return others;
   } catch (err) {
     throw err;
   }
@@ -70,8 +74,8 @@ export const signup = async (email, password, confirmPassword, username) => {
         username,
       },
     });
-    setAuth(user, token);
-    return true;
+    await setAuth(user, token);
+    return user;
   } catch (err) {
     throw err;
   }

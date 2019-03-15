@@ -11,6 +11,7 @@ import {
   isAdmin,
   isAuthenticated,
   isValidLogin,
+  isValidRequest,
   isValidSignup,
 } from '@middleware';
 import { resolvers } from '@resolvers';
@@ -25,7 +26,13 @@ const app = express();
 
 app.post(GRAPHQL_ENDPOINT);
 
-const middlewares = [isValidSignup, isValidLogin, isAuthenticated, isAdmin];
+const middlewares = [
+  isValidSignup,
+  isValidLogin,
+  isAuthenticated,
+  isAdmin,
+  isValidRequest,
+];
 
 const server = createApolloServer(app, {
   graphqlEndpoint: GRAPHQL_ENDPOINT,
