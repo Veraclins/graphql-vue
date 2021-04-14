@@ -16,7 +16,7 @@
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.9.1",
     "dotenv": "^6.2.0",
-    "esm": "3.0.x",
+    "esm": "3.2.25",
     "express": "4.16.x",
     "express-jwt": "5.3.x",
     "got": "9.6.x",
