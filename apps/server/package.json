@@ -20,7 +20,7 @@
     "express": "4.16.x",
     "express-jwt": "5.3.x",
     "got": "9.6.x",
-    "graphql": "^14.1.1",
+    "graphql": "^14.7.0",
     "graphql-binding": "2.4.x",
     "graphql-import": "0.7.x",
     "graphql-middleware": "3.0.x",
