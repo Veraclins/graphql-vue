@@ -17,7 +17,7 @@
     "class-validator": "^0.9.1",
     "dotenv": "^6.2.0",
     "esm": "3.0.x",
-    "express": "4.16.x",
+    "express": "4.17.3",
     "express-jwt": "5.3.x",
     "got": "9.6.x",
     "graphql": "^14.1.1",
